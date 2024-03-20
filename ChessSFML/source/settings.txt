@@ -1,0 +1,6 @@
+brightness 0.31
+FrameRateLimit 120
+FullScreen 0
+Vsynk 0
+WinW 1366
+WinH 768
