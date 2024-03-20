@@ -1,4 +1,4 @@
-﻿include("C:/Users/gmens/vcpkg/scripts/buildsystems/vcpkg.cmake")
+﻿include("vcpkg.cmake")
 file(GLOB_RECURSE SOURCES "src/*.cpp" "include/*.h" "imgui-console-master/include/*.h" "imgui-console-master/src/*.cpp")
 
 
