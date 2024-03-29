@@ -38,6 +38,7 @@ public:
     static bool OnGameGUI;
     static bool OnNetGameGUI;
     static bool Play;
+    static bool showRule;
 
     static bool is_server_waiting;
 
@@ -69,6 +70,78 @@ public:
     static void restart_program();
     static void ReloaderDialog();
     
+    static void OpenURL(const std::string& url) {
+        // Формируем команду для открытия ссылки в браузере
+        std::string command = "start " + url; // В Linux средах используется xdg-open, в Windows можно использовать start
+        // Выполняем команду в командной строке
+        system(command.c_str());
+    }
+
+    static void ShowRule()
+    {
+        ImGui::GetStyle().Colors[ImGuiCol_WindowBg] = ImVec4(0.0f, 0.0f, 0.0f, 0.8f);
+        if (showRule)
+        {
+            ImGui::Begin(uTC(u8"Правила"), &showRule);
+
+            ImGui::Text(uTC(u8"Правила игры:"));
+            ImGui::Text(uTC(u8"1. Цель игры: Целью игры в шахматы является мат – состояние, когда король любого из игроков находится под угрозой захвата и не имеет возможности избежать захвата."));
+            ImGui::Text(uTC(u8"2. Фигуры и их ходы:"));
+            ImGui::Text(uTC(u8" Король: Может ходить на любое соседнее поле."));
+            ImGui::Text(uTC(u8" Ферзь : Может ходить по горизонтали, вертикали и диагонали."));
+            ImGui::Text(uTC(u8" Ладья : Двигается только по горизонтали и вертикали."));
+            ImGui::Text(uTC(u8" Слон : Двигается только по диагонали."));
+            ImGui::Text(uTC(u8" Конь : Ходит буквой Г – два поля в одном направлении и одно перпендикулярно ему."));
+            ImGui::Text(uTC(u8" Пешка : Ходит вперед на одно поле, но с начальной позиции может сделать два шага.Бьет фигуры по диагонали на одно поле.."));
+            ImGui::Text(uTC(u8"3. Рокировка: Специальный ход, при котором король и ладья одновременно перемещаются. Он может быть выполнен только в случае, если ни король, ни ладья не сделали ход, и между ними нет других фигур."));
+            ImGui::Text(uTC(u8"4. Взятие на проходе: Возможность пешки атаковать пешку соперника, которая двинулась на два поля из начальной позиции. Пешка противника может взять ее как будто она двигалась только на одно поле."));
+            ImGui::Text(uTC(u8"5. Превращение пешки: Если пешка достигает последнего ряда доски, она должна быть заменена на фигуру, на выбор игрока."));
+            ImGui::Text(uTC(u8"6. Пат: Ситуация, когда у игрока нет возможности сделать ход, но его король не находится под шахом. Это объявляется ничьей."));
+            ImGui::Text(uTC(u8"7. Мат: Ситуация, когда король находится под прямой атакой и не имеет возможности избежать захвата."));
+
+            if (ImGui::Button(uTC(u8"Итальянская партия")))
+            {
+                OpenURL("https://lichess.org/study/QUXJ1WH3/gK5JfSwK");
+            }
+            ImGui::SameLine();
+            if (ImGui::Button(uTC(u8"Приятный Ферзевй Гамбит")))
+            {
+                OpenURL("https://lichess.org/study/QUXJ1WH3/CnvGZGnf");
+            }
+            ImGui::SameLine();
+
+            if (ImGui::Button(uTC(u8"Дебют Сокольского")))
+            {
+                OpenURL("https://lichess.org/study/QUXJ1WH3/jjXjIEgi");
+            }
+            if (ImGui::Button(uTC(u8"Дебют четырёх коней")))
+            {
+                OpenURL("https://lichess.org/study/QUXJ1WH3/pBeyrqxN");
+            }
+            ImGui::SameLine();
+
+            if (ImGui::Button(uTC(u8"Русская партия")))
+            {
+                OpenURL("https://lichess.org/study/QUXJ1WH3/2kPECrhW");
+            }
+            ImGui::SameLine();
+
+        }
+
+        // Выбор режима игры
+
+        if (ImGui::Button(uTC(u8"Отмена")))
+        {
+            showRule = 0;
+        }
+
+        // Завершение окна ImGui
+
+        ImGui::End();
+
+    }
+
+
     
     static void ShowControlSettings()
     {
@@ -536,6 +609,10 @@ public:
         {
             SerwerWait();
         }
+        if (showRule)
+        {
+            ShowRule();
+        }
         // Создание главного окна imgui
         ImGui::SetNextWindowSizeConstraints(ImVec2(RenderMenu::CGlobalSettings.video.WinW, RenderMenu::CGlobalSettings.video.WinH), ImVec2(FLT_MAX, FLT_MAX));
         ImGui::SetNextWindowSize(ImVec2(RenderMenu::CGlobalSettings.video.WinW, RenderMenu::CGlobalSettings.video.WinH), ImGuiCond_FirstUseEver);
@@ -563,16 +640,21 @@ public:
         {
             showNetworkGame = true;
         }
-        ImGui::Spacing();
-        if (!OnGameGUI)
-        if (ImGui::Button(uTC(u8"Загрузить игру"), ImVec2(200.f, 50.f)))
-        {
-            
-        }
+        //ImGui::Spacing();
+        //if (!OnGameGUI)
+        //if (ImGui::Button(uTC(u8"Загрузить игру"), ImVec2(200.f, 50.f)))
+        //{
+        //    
+        //}
         ImGui::Spacing();
         if (ImGui::Button(uTC(u8"Настройки"), ImVec2(200.f, 50.f)))
         {
             showSettings = true;
+        }
+        ImGui::Spacing();
+        if (ImGui::Button(uTC(u8"Справка"), ImVec2(200.f, 50.f)))
+        {
+            showRule = true;
         }
         ImGui::Spacing();
         if (ImGui::Button(uTC(u8"Выход"), ImVec2(200.f, 50.f)))

@@ -10,7 +10,9 @@ target_link_libraries(ChessSFML PRIVATE imgui::imgui)
 
 
 find_package(ImGui-SFML CONFIG REQUIRED)
-target_link_libraries(ChessSFML PRIVATE ImGui-SFML::ImGui-SFML)
+find_package(unofficial-sqlite3 CONFIG REQUIRED)
+target_link_libraries(ChessSFML PRIVATE ImGui-SFML::ImGui-SFML)   
+    target_link_libraries(ChessSFML PRIVATE unofficial::sqlite3::sqlite3)
 
 
 target_include_directories(ChessSFML PRIVATE "include")
