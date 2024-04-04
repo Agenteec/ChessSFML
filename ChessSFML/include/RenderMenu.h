@@ -6,11 +6,12 @@
 #include "CSettings.h"
 #include "OnGameUI.h"
 #include <imgui-SFML.h>
-#include<imgui_stdlib.h>
+#include <imgui_stdlib.h>
 #include <SFML/Graphics.hpp>
 #include <imgui_console/imgui_console.h>
 #include <cstdlib>
 #include <fstream>
+#include <DBController.h>
 
 void Starter();
 void SaveSettings();
@@ -26,6 +27,8 @@ public:
     static int gameMode; // Индекс выбранного режима игры
     static float moveTime; // Количество секунд на ход
     static int addTimeIndex; // Индекс выбранного времени для добавления
+    static DBController db;
+
 
     static bool isControlTime;
     static bool withRating;
@@ -43,6 +46,7 @@ public:
     static bool is_server_waiting;
 
     static bool showConsole;
+    static bool showProfile;
     static bool showSettings;
     static bool showLocalGame;
     static bool showNetworkGame;
@@ -51,8 +55,8 @@ public:
     static bool ServerOrClient;
     //static RenderClassicChess* netGame;
     static bool ShowGraphicsSettings;
-    static bool showControlsSettings;
-    static bool showSoundSettings;
+    //static bool showControlsSettings;
+    //static bool showSoundSettings;
 
     static float deltaTime;
     static float lastFrameTime;
@@ -141,6 +145,48 @@ public:
 
     }
 
+    static void ShowProfile()
+    {
+        ImGui::Begin(uTC(u8"Управление профилями"), &showProfile);
+
+        static char nameBuffer[64];
+        ImGui::InputText(uTC(u8"Имя пользователя"), nameBuffer, IM_ARRAYSIZE(nameBuffer));
+        if (ImGui::Button(uTC(u8"Добавить"))) {
+            db.createUser(nameBuffer);
+            memset(nameBuffer, 0, sizeof(nameBuffer));
+        }
+
+        ImGui::Text(uTC(u8"Список пользователей:"));
+
+        // Начало таблицы
+        if (ImGui::BeginTable("##table1", 3)) {
+            // Заголовки столбцов
+            ImGui::TableSetupColumn(uTC(u8"Имя"));
+            ImGui::TableSetupColumn(uTC(u8"ID"));
+            ImGui::TableSetupColumn("");
+            ImGui::TableHeadersRow();
+
+            for (const auto& user : db.users) {
+                ImGui::TableNextRow();
+                ImGui::TableSetColumnIndex(0);
+                ImGui::Text("%s", user.name.c_str());
+                ImGui::TableSetColumnIndex(1);
+                ImGui::Text("%d", user.id);
+                ImGui::TableSetColumnIndex(2);
+                if (ImGui::Button((uTC(u8"Удалить##") + std::to_string(user.id)).c_str())) {
+                    db.deleteUser(user.id);
+                }
+                if (ImGui::Button((uTC(u8"Удалить##") + std::to_string(user.id)).c_str())) {
+                    db.deleteUser(user.id);
+                }
+
+            }
+
+            ImGui::EndTable();
+        }
+
+        ImGui::End();
+    }
 
     
     static void ShowControlSettings()
@@ -306,7 +352,7 @@ public:
         // Выбор режима игры
 
         ImGui::Text(uTC(u8"Игровой режим:"));
-        ImGui::ListBox("##gamemode", &RenderMenu::gameMode, gameModes, 8, 4);
+        ImGui::ListBox("##gamemode", &RenderMenu::gameMode, gameModes, 1, 4);
 
         // Выбор контроля времени
         if (RenderMenu::gameMode != 7)
@@ -353,7 +399,7 @@ public:
         // Выбор режима игры
 
         ImGui::Text(uTC(u8"Игровой режим:"));
-        ImGui::ListBox("##gamemode", &RenderMenu::gameMode, gameModes, 8, 4);
+        ImGui::ListBox("##gamemode", &RenderMenu::gameMode, gameModes, 1, 4);
 
         // Выбор контроля времени
 
@@ -421,29 +467,30 @@ public:
 
         ImGui::Separator();
 
-        ImGui::Text(uTC(u8"Список доступных игр"));
-        static std::vector<std::string> games;// = GetAvailableGames(); // Получение списка доступных игр
-        //games.push_back("127.0.0.1");
-        static int selectedGame = 0; // Индекс выбранной игры
-        static bool gameListChanged = true; // Флаг изменения списка игр
-        if (ImGui::BeginListBox(uTC(u8"##Список игр"), ImVec2(-1, 100))) {
-            for (int i = 0; i < games.size(); i++) {
-                bool isSelected = (selectedGame == i);
-                if (ImGui::Selectable(games[i].c_str(), isSelected)) {
-                    selectedGame = i;
-                }
-                if (isSelected) {
-                    ImGui::SetItemDefaultFocus();
-                }
-            }
-            ImGui::EndListBox();
-        }
 
-        if (ImGui::Button(uTC(u8"Обновить список игр"))) {
-            // Обработка нажатия на кнопку "Обновить список игр"
-            //games = GetAvailableGames();
-            gameListChanged = true;
-        }
+        //ImGui::Text(uTC(u8"Список доступных игр"));
+        //static std::vector<std::string> games;// = GetAvailableGames(); // Получение списка доступных игр
+        //games.push_back("127.0.0.1");
+        //static int selectedGame = 0; // Индекс выбранной игры
+        //static bool gameListChanged = true; // Флаг изменения списка игр
+        //if (ImGui::BeginListBox(uTC(u8"##Список игр"), ImVec2(-1, 100))) {
+        //    for (int i = 0; i < games.size(); i++) {
+        //        bool isSelected = (selectedGame == i);
+        //        if (ImGui::Selectable(games[i].c_str(), isSelected)) {
+        //            selectedGame = i;
+        //        }
+        //        if (isSelected) {
+        //            ImGui::SetItemDefaultFocus();
+        //        }
+        //    }
+        //    ImGui::EndListBox();
+        //}
+
+        //if (ImGui::Button(uTC(u8"Обновить список игр"))) {
+        //    // Обработка нажатия на кнопку "Обновить список игр"
+        //    //games = GetAvailableGames();
+        //    gameListChanged = true;
+        //}
 
         ImGui::Separator();
 
@@ -451,12 +498,12 @@ public:
             showNetworkGameCreator = true;
         }
 
-        if (ImGui::Button(uTC(u8"Присоединиться к выбранной игре"))) {
-            // Обработка нажатия на кнопку "Присоединиться к выбранной игре"
-            if (selectedGame >= 0 && selectedGame < games.size()) {
-                //JoinGame(games[selectedGame]);
-            }
-        }
+        //if (ImGui::Button(uTC(u8"Присоединиться к выбранной игре"))) {
+        //    // Обработка нажатия на кнопку "Присоединиться к выбранной игре"
+        //    if (selectedGame >= 0 && selectedGame < games.size()) {
+        //        //JoinGame(games[selectedGame]);
+        //    }
+        //}
 
         ImGui::End();
     }
@@ -502,10 +549,10 @@ public:
             if (ImGui::Button(uTC(u8"Графика")))
             {
                 ShowGraphicsSettings = true;
-                showControlsSettings = false;
-                showSoundSettings = false;
+                //showControlsSettings = false;
+                //showSoundSettings = false;
             }
-            ImGui::SameLine();
+            /*ImGui::SameLine();
             if (ImGui::Button(uTC(u8"Управление")))
             {
                 ShowGraphicsSettings = false;
@@ -518,33 +565,32 @@ public:
                 ShowGraphicsSettings = false;
                 showControlsSettings = false;
                 showSoundSettings = true;
-            }
+            }*/
 
             if (ShowGraphicsSettings)
             {
                 showGraphicsSettings();
             }
-            else if (showControlsSettings)
-            {
-                ImGui::Text(uTC(u8"Настройки управления"));
-                ShowControlSettings();
-            }
-            else if (showSoundSettings)
-            {
-                ImGui::Text(uTC(u8"Настройки звука"));
-                ImGui::SliderFloat(uTC(u8"Громкость окружения"), &tempSettings.volume.ambientVolume, 0.0f, 1.0f);
-                ImGui::SliderFloat(uTC(u8"Громкость музыки"), &tempSettings.volume.musicVolume, 0.0f, 1.0f);
-            }
+            //else if (showControlsSettings)
+            //{
+            //    ImGui::Text(uTC(u8"Настройки управления"));
+            //    ShowControlSettings();
+            //}
+            //else if (showSoundSettings)
+            //{
+            //    ImGui::Text(uTC(u8"Настройки звука"));
+            //    ImGui::SliderFloat(uTC(u8"Громкость окружения"), &tempSettings.volume.ambientVolume, 0.0f, 1.0f);
+            //    ImGui::SliderFloat(uTC(u8"Громкость музыки"), &tempSettings.volume.musicVolume, 0.0f, 1.0f);
+            //}
 
             ImGui::Separator();
 
             ImGui::SetCursorPos(ImVec2(ImGui::GetWindowContentRegionMax().x - 300, ImGui::GetWindowContentRegionMax().y - 50));
 
-            // Добавляем первую кнопку и выравниваем ее справа
-            ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(5, 0)); // устанавливаем промежуток между элементами
-            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.3f, 0.8f, 0.3f, 1.0f)); // устанавливаем цвет кнопки
+            ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(5, 0)); 
+            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.3f, 0.8f, 0.3f, 1.0f)); 
             if (ImGui::Button(uTC(u8"Ок"), ImVec2(80, 0))) {
-                // Действия, выполняемые при нажатии на кнопку
+
                 showSettings = false;
                 if (tempSettings.SetSettings(window) || tempSettings.video.FullScreen != CGlobalSettings.video.FullScreen)
                 {
@@ -555,19 +601,18 @@ public:
             ImGui::PopStyleColor();
             ImGui::PopStyleVar();
 
-            // Добавляем вторую кнопку и выравниваем ее справа
             ImGui::SameLine();
             ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(5, 0));
             ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.8f, 0.3f, 0.3f, 1.0f));
             if (ImGui::Button(uTC(u8"Отмена"), ImVec2(80, 0))) {
-                // Действия, выполняемые при нажатии на кнопку
+
                 tempSettings = CGlobalSettings;
                 showSettings = false;
             }
             ImGui::PopStyleColor();
             ImGui::PopStyleVar();
 
-            // Добавляем третью кнопку и выравниваем ее справа
+
             ImGui::SameLine();
             ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(5, 0));
             ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.3f, 0.3f, 0.8f, 1.0f));
@@ -613,6 +658,10 @@ public:
         {
             ShowRule();
         }
+        if (showProfile)
+        {
+            ShowProfile();
+        }
         // Создание главного окна imgui
         ImGui::SetNextWindowSizeConstraints(ImVec2(RenderMenu::CGlobalSettings.video.WinW, RenderMenu::CGlobalSettings.video.WinH), ImVec2(FLT_MAX, FLT_MAX));
         ImGui::SetNextWindowSize(ImVec2(RenderMenu::CGlobalSettings.video.WinW, RenderMenu::CGlobalSettings.video.WinH), ImGuiCond_FirstUseEver);
@@ -639,6 +688,11 @@ public:
         if (ImGui::Button(uTC(u8"Сетевая игра"), ImVec2(200.f, 50.f)))
         {
             showNetworkGame = true;
+        }
+        if (!OnGameGUI)
+        if (ImGui::Button(uTC(u8"Профили"), ImVec2(200.f, 50.f)))
+        {
+            showProfile = true;
         }
         //ImGui::Spacing();
         //if (!OnGameGUI)

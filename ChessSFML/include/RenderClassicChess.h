@@ -154,6 +154,10 @@ public:
     /// В кого превращается пешка
     /// </summary>
     int TransPawn;
+    /// <summary>
+    /// Контроль времени
+    /// </summary>
+    float wTime, bTime;
 
     sf::Vector2i CordRotater(int x,int y)
     {
@@ -278,10 +282,19 @@ public:
                 }
             }
         }
+
     }
+
     RenderClassicChess(int OnNetworkGame,int gamemode):RenderClassicChess::RenderClassicChess(){
         this->OnNetworkGame = OnNetworkGame;
+        wTime = (RenderMenu::moveTime);
+        bTime = (RenderMenu::moveTime);
 
+    }
+    void resetTime()
+    {
+        wTime = (RenderMenu::moveTime);
+        bTime = (RenderMenu::moveTime);
     }
     void Mover(sf::Event event, sf::RenderWindow* window)
     {
@@ -2035,7 +2048,7 @@ public:
             MyPacket = myMove;
         }
     }
-    void Draw(sf::RenderWindow* window)
+    void Draw(sf::RenderWindow* window, float deltaTime)
     {
         if ((Back&&OnNetworkGame ==0)||((Back&&NetBack)&&MyNetBack))
         {
@@ -2065,7 +2078,11 @@ public:
         {
             nc->sendMessage(msg);
         }
-        gameUI.drawChessClock(window);
+        if (RenderMenu::isControlTime)
+        {
+            gameUI.drawChessClock(window, RenderMenu::addTimeIndex,wTime,bTime, deltaTime, !WorB);
+        }
+
         if ((WMate||WBDraw||BMate)&&!WinWindowC)
         {
             WinWindow = 1;

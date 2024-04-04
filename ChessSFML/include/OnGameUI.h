@@ -231,40 +231,39 @@ public:
         ImGui::End();
 
     }
-    void drawChessClock(sf::RenderWindow* window) {
+    void drawChessClock(sf::RenderWindow* window, const int& addTime, float& wTime, float& bTime, float dts, bool whoTurns) {
+        
         static bool isPaused = true;
-        static bool isBlackTurn = false;
-        static int whiteTime = 60*100;
-        static int blackTime = 60;
-        static sf::Clock ClockT;
+       
 
         //ImGui::SFML::Update(*window, ClockT.restart());
-        ClockT.restart();
         ImGui::Begin("Chess Clock");
+        float bhour = bTime / 3600.;
+        float bmin = (bTime - (int)bhour * 3600.) / 60.;
+        float bsec = bTime - (int)bhour * 3600. - (int)bmin * 60.;
+        float whour = wTime / 3600.;
+        float wmin = (wTime - (int)whour * 3600.) / 60.;
+        float wsec = wTime - (int)whour * 3600. - (int)wmin * 60;
 
         std::stringstream ss;
-        ss << std::setw(2) << std::setfill('0') << whiteTime / 60 << ":"
-            << std::setw(2) << std::setfill('0') << whiteTime % 60;
+        ss << (int)wsec << ":" << (int)wmin << ":" << (int)whour;
         std::string whiteTimeString = ss.str();
 
         ss.str("");
-        ss << std::setw(2) << std::setfill('0') << blackTime / 60 << ":"
-            << std::setw(2) << std::setfill('0') << blackTime % 60;
+        ss << (int)bsec << ":" << (int)bmin  << ":" << (int)bhour;
         std::string blackTimeString = ss.str();
-
         if (!isPaused) {
-            sf::Time timeElapsed = ClockT.restart();
-            if (isBlackTurn) {
-                blackTime -= timeElapsed.asSeconds();
-                if (blackTime <= 0) {
-                    blackTime = 0;
+            if (whoTurns) {
+                bTime -= dts;
+                if (bTime <= 0) {
+                    bTime = 0;
                     isPaused = true;
                 }
             }
             else {
-                whiteTime -= timeElapsed.asSeconds();
-                if (whiteTime <= 0) {
-                    whiteTime = 0;
+                wTime -= dts;
+                if (wTime <= 0) {
+                    wTime = 0;
                     isPaused = true;
                 }
             }
@@ -274,21 +273,17 @@ public:
             isPaused = !isPaused;
         }
 
-        if (ImGui::Button("Reset")) {
-            whiteTime = 60;
-            blackTime = 60;
-            isPaused = true;
-            isBlackTurn = false;
-        }
+        //if (ImGui::Button("Reset")) {
+        //    whiteTime = 60;
+        //    blackTime = 60;
+        //    isPaused = true;
+        //    isBlackTurn = false;
+        //}
 
-        ImGui::Text(isBlackTurn ? "Black's turn" : "White's turn");
+        ImGui::Text(whoTurns ? "Black's turn" : "White's turn");
 
         ImGui::Text("White: %s", whiteTimeString.c_str());
         ImGui::Text("Black: %s", blackTimeString.c_str());
-
-        if (!isPaused) {
-            ImGui::Text("Time remaining: %d", isBlackTurn ? blackTime : whiteTime);
-        }
 
         ImGui::End();
     }

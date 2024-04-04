@@ -26,7 +26,7 @@ int main()
     localtime_s(&tm, &t);
     std::stringstream* ss = new stringstream;
     // форматируем дату в нужном формате
-    *ss << "Alpha V(1.8.0)  ";
+    *ss << "Alpha V(1.8.1)  ";
     *ss << std::put_time(&tm, "%d.%m.%Y") << std::endl;
     RenderMenu::VersionBuildStr = ss->str();
     delete ss;
@@ -124,7 +124,7 @@ int main()
     RenderClassicChess ChessRender;
     ChessRender.Rotate(2);
     RenderClassicChess* NetGame = nullptr;
-    
+    bool isTimeSet = false;
     //ImGuiConsole console;
 	#pragma region Цикл отрисовки
         // Основной цикл
@@ -219,13 +219,17 @@ int main()
                     
                 }
                 
-                NetGame->Draw(window);
+                NetGame->Draw(window, deltaTime);
             }
            
             if (RenderMenu::OnGameGUI)
             {
-                
-                ChessRender.Draw(window);
+                if (!isTimeSet)
+                {
+                    isTimeSet = !isTimeSet;
+                    ChessRender.resetTime();
+                }
+                ChessRender.Draw(window, deltaTime);
             }
             ImGui::SFML::Render(*window);
             

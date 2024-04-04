@@ -1,7 +1,7 @@
 #include "RenderMenu.h"
 
 bool RenderMenu::showRenderMenu = true;
-
+bool RenderMenu::showProfile = false;
 bool RenderMenu::showConsole = false;
 bool RenderMenu::showSettings = false;
 bool RenderMenu::showLocalGame = false;
@@ -27,12 +27,13 @@ const float RenderMenu::moveTimes[] = { 30.0f, 60.0f, 120.0f, 300.0f, 3600.0f };
 //RenderClassicChess *RenderMenu::netGame = nullptr;
 
 bool RenderMenu::ShowGraphicsSettings = true;
-bool RenderMenu::showControlsSettings = false;
-bool RenderMenu::showSoundSettings = false;
+//bool RenderMenu::showControlsSettings = false;
+//bool RenderMenu::showSoundSettings = false;
 float RenderMenu::deltaTime = 0.0f;
 float RenderMenu::lastFrameTime = 0.0f;
 int RenderMenu::fps = 1;
 
+DBController RenderMenu::db;
 ImGuiConsole RenderMenu::console;
 CSettings RenderMenu::tempSettings;
 CSettings RenderMenu::CGlobalSettings;
