@@ -19,6 +19,7 @@ float RenderMenu::moveTime = 60.0f; // Количество секунд на ход
 int RenderMenu::addTimeIndex = 0; // Индекс выбранного времени для добавления
 bool RenderMenu::isControlTime = true;
 bool RenderMenu::withRating = false;
+int RenderMenu::userId = 0;
 
 const char* RenderMenu::gameModes[] = { "Standard"};//"Standard", "Crazyhouse", "Chess960", "King of the Hill", "Three Check", "Antichess", "Racing Kings", "FFA(box2d)"
 const char* RenderMenu::addTimes[] = { "+0 sec", "+1 sec", "+2 sec", "+3 sec", "+4 sec","+5 sec" };
@@ -32,6 +33,8 @@ bool RenderMenu::ShowGraphicsSettings = true;
 float RenderMenu::deltaTime = 0.0f;
 float RenderMenu::lastFrameTime = 0.0f;
 int RenderMenu::fps = 1;
+
+
 
 DBController RenderMenu::db;
 ImGuiConsole RenderMenu::console;

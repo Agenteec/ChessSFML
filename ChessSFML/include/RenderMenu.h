@@ -51,6 +51,7 @@ public:
     static bool showLocalGame;
     static bool showNetworkGame;
     static bool showNetworkGameCreator;
+    static int userId;
     
     static bool ServerOrClient;
     //static RenderClassicChess* netGame;
@@ -148,6 +149,21 @@ public:
     static void ShowProfile()
     {
         ImGui::Begin(uTC(u8"Управление профилями"), &showProfile);
+        if (db.users.empty())
+        {
+            ImGui::Text(uTC(u8"Пользователь не выбран, добавьте пользователя"));
+        }
+        else
+        {
+            for (const auto& user : db.users) {
+                if (userId == user.id)
+                {
+                    
+                    ImGui::Text("%s", user.name.c_str());
+                }
+               
+            }
+        }
 
         static char nameBuffer[64];
         ImGui::InputText(uTC(u8"Имя пользователя"), nameBuffer, IM_ARRAYSIZE(nameBuffer));
@@ -157,10 +173,7 @@ public:
         }
 
         ImGui::Text(uTC(u8"Список пользователей:"));
-
-        // Начало таблицы
         if (ImGui::BeginTable("##table1", 3)) {
-            // Заголовки столбцов
             ImGui::TableSetupColumn(uTC(u8"Имя"));
             ImGui::TableSetupColumn(uTC(u8"ID"));
             ImGui::TableSetupColumn("");
@@ -176,8 +189,9 @@ public:
                 if (ImGui::Button((uTC(u8"Удалить##") + std::to_string(user.id)).c_str())) {
                     db.deleteUser(user.id);
                 }
-                if (ImGui::Button((uTC(u8"Удалить##") + std::to_string(user.id)).c_str())) {
-                    db.deleteUser(user.id);
+                ImGui::SameLine();
+                if (ImGui::Button((uTC(u8"Выбрать##") + std::to_string(user.id)).c_str())) {
+                    userId = user.id;
                 }
 
             }
