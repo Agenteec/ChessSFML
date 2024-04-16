@@ -217,7 +217,7 @@ void RenderMenu::ReloaderDialog()
 }
 void StartServer()
 {
-    std::system("start ServerChessCounterattack.exe");
+    std::system("start ChessServer.exe");
 }
 
 

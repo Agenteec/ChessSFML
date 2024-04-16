@@ -413,54 +413,56 @@ public:
                         int del = -1;
                         //Если рокировка
                         #pragma region Рокировка
-                                                if (result == 7)
-                                                {
+                        if (result == 7)
+                        {
 
-                                                    Moves.push_back(MoveWB(MoveFrTo(SpritePieces[0][n].Pos, sf::Vector2i(xx, yy), SpritePieces[0][n].Type, Board.board[xx][yy]), MoveFrTo(sf::Vector2i(-1, -1), sf::Vector2i(-1, -1), EMPTYPiece, EMPTYPiece)));
-                                                    if (SpritePieces[0][n].Pos.y - yy < 0)
-                                                    {
-                                                        Board.board[SpritePieces[0][n].Pos.x][SpritePieces[0][n].Pos.y + 3] = EMPTYPiece;
-                                                        Board.board[SpritePieces[0][n].Pos.x][SpritePieces[0][n].Pos.y] = EMPTYPiece;
-                                                        Board.board[SpritePieces[0][n].Pos.x][SpritePieces[0][n].Pos.y + 1] = WRook;
-                                                        Board.board[SpritePieces[0][n].Pos.x][SpritePieces[0][n].Pos.y + 2] = WKing;
-                                                        for (size_t i = 0; i < SpritePieces->size(); i++)
-                                                        {
-                                                            if (SpritePieces[0][i].Pos == sf::Vector2i(0, Board.YMax - 1))
-                                                            {
-                                                                SpritePieces[0][i].Pos = sf::Vector2i(0, Board.YMax - 1 - 2);
-                                                                //cout << "000" << endl;
-                                                                posSetter(i);
-                                                                break;
-                                                            }
-                                                        }
-                                                        SpritePieces[0][n].Pos = sf::Vector2i(SpritePieces[0][n].Pos.x, SpritePieces[0][n].Pos.y + 2);
-                                                        posSetter(n);
-
-
-                                                    }
-                                                    else
-                                                    {
-                                                        Board.board[SpritePieces[0][n].Pos.x][SpritePieces[0][n].Pos.y - 4] = EMPTYPiece;
-                                                        Board.board[SpritePieces[0][n].Pos.x][SpritePieces[0][n].Pos.y] = EMPTYPiece;
-                                                        Board.board[SpritePieces[0][n].Pos.x][SpritePieces[0][n].Pos.y - 1] = WRook;
-                                                        Board.board[SpritePieces[0][n].Pos.x][SpritePieces[0][n].Pos.y - 2] = WKing;
-                                                        for (size_t i = 0; i < SpritePieces->size(); i++)
-                                                        {
-                                                            if (SpritePieces[0][i].Pos == sf::Vector2i(0, 0))
-                                                            {
-                                                                SpritePieces[0][i].Pos = sf::Vector2i(0, 3);
-                                                                //cout << "00" << endl;
-                                                                posSetter(i);
-                                                                break;
-                                                            }
-                                                        }
-                                                        SpritePieces[0][n].Pos = sf::Vector2i(SpritePieces[0][n].Pos.x, SpritePieces[0][n].Pos.y - 2);
-                                                        posSetter(n);
-                                                    }
-                                                    MoveSound.play();
+                            Moves.push_back(MoveWB(MoveFrTo(SpritePieces[0][n].Pos, sf::Vector2i(xx, yy), SpritePieces[0][n].Type, Board.board[xx][yy]), MoveFrTo(sf::Vector2i(-1, -1), sf::Vector2i(-1, -1), EMPTYPiece, EMPTYPiece)));
+                            //Moves[Moves.size() - 1].Black = MoveFrTo(SpritePieces[0][n].Pos, sf::Vector2i(xx, yy), SpritePieces[0][n].Type, Board.board[xx][yy]);
+                            lastmove = LastMove(SpritePieces[0][n].Pos, sf::Vector2i(xx, yy), Board.board[SpritePieces[0][n].Pos.x][SpritePieces[0][n].Pos.y]);
+                            if (SpritePieces[0][n].Pos.y - yy < 0)
+                            {
+                                Board.board[SpritePieces[0][n].Pos.x][SpritePieces[0][n].Pos.y + 3] = EMPTYPiece;
+                                Board.board[SpritePieces[0][n].Pos.x][SpritePieces[0][n].Pos.y] = EMPTYPiece;
+                                Board.board[SpritePieces[0][n].Pos.x][SpritePieces[0][n].Pos.y + 1] = WRook;
+                                Board.board[SpritePieces[0][n].Pos.x][SpritePieces[0][n].Pos.y + 2] = WKing;
+                                for (size_t i = 0; i < SpritePieces->size(); i++)
+                                {
+                                    if (SpritePieces[0][i].Pos == sf::Vector2i(0, Board.YMax - 1))
+                                    {
+                                        SpritePieces[0][i].Pos = sf::Vector2i(0, Board.YMax - 1 - 2);
+                                        //cout << "000" << endl;
+                                        posSetter(i);
+                                        break;
+                                    }
+                                }
+                                SpritePieces[0][n].Pos = sf::Vector2i(SpritePieces[0][n].Pos.x, SpritePieces[0][n].Pos.y + 2);
+                                posSetter(n);
 
 
-                                                }
+                            }
+                            else
+                            {
+                                Board.board[SpritePieces[0][n].Pos.x][SpritePieces[0][n].Pos.y - 4] = EMPTYPiece;
+                                Board.board[SpritePieces[0][n].Pos.x][SpritePieces[0][n].Pos.y] = EMPTYPiece;
+                                Board.board[SpritePieces[0][n].Pos.x][SpritePieces[0][n].Pos.y - 1] = WRook;
+                                Board.board[SpritePieces[0][n].Pos.x][SpritePieces[0][n].Pos.y - 2] = WKing;
+                                for (size_t i = 0; i < SpritePieces->size(); i++)
+                                {
+                                    if (SpritePieces[0][i].Pos == sf::Vector2i(0, 0))
+                                    {
+                                        SpritePieces[0][i].Pos = sf::Vector2i(0, 3);
+                                        //cout << "00" << endl;
+                                        posSetter(i);
+                                        break;
+                                    }
+                                }
+                                SpritePieces[0][n].Pos = sf::Vector2i(SpritePieces[0][n].Pos.x, SpritePieces[0][n].Pos.y - 2);
+                                posSetter(n);
+                            }
+                            MoveSound.play();
+                            //lastmove = LastMove(SpritePieces[0][n].Pos, sf::Vector2i(xx, yy), Board.board[SpritePieces[0][n].Pos.x][SpritePieces[0][n].Pos.y]);
+
+                        }
                         #pragma endregion
 
 
@@ -684,56 +686,56 @@ public:
                     {
 
                         #pragma region Рокировка
-                                                if (result == 7)
-                                                {
+                        if (result == 7)
+                        {
 
-                                                    Moves[Moves.size() - 1].Black = MoveFrTo(SpritePieces[0][n].Pos, sf::Vector2i(xx, yy), SpritePieces[0][n].Type, Board.board[xx][yy]);
-                                                    lastmove = LastMove(SpritePieces[0][n].Pos, sf::Vector2i(xx, yy), Board.board[SpritePieces[0][n].Pos.x][SpritePieces[0][n].Pos.y]);
-                                                    if (SpritePieces[0][n].Pos.y - yy < 0)
-                                                    {
-                                                        Board.board[SpritePieces[0][n].Pos.x][SpritePieces[0][n].Pos.y + 3] = EMPTYPiece;
-                                                        Board.board[SpritePieces[0][n].Pos.x][SpritePieces[0][n].Pos.y] = EMPTYPiece;
-                                                        Board.board[SpritePieces[0][n].Pos.x][SpritePieces[0][n].Pos.y + 1] = BRook;
-                                                        Board.board[SpritePieces[0][n].Pos.x][SpritePieces[0][n].Pos.y + 2] = BKing;
-                                                        for (size_t i = 0; i < SpritePieces->size(); i++)
-                                                        {
-                                                            if (SpritePieces[0][i].Pos == sf::Vector2i(Board.XMax - 1, Board.YMax - 1))
-                                                            {
-                                                                SpritePieces[0][i].Pos = sf::Vector2i(Board.XMax - 1, Board.YMax - 1 - 2);
-                                                                //cout << "000" << endl;
-                                                                posSetter(i);
-                                                                break;
-                                                            }
-                                                        }
-                                                        SpritePieces[0][n].Pos = sf::Vector2i(SpritePieces[0][n].Pos.x, SpritePieces[0][n].Pos.y + 2);
-                                                        posSetter(n);
-
-
-                                                    }
-                                                    else
-                                                    {
-                                                        Board.board[SpritePieces[0][n].Pos.x][SpritePieces[0][n].Pos.y - 4] = EMPTYPiece;
-                                                        Board.board[SpritePieces[0][n].Pos.x][SpritePieces[0][n].Pos.y] = EMPTYPiece;
-                                                        Board.board[SpritePieces[0][n].Pos.x][SpritePieces[0][n].Pos.y - 1] = BRook;
-                                                        Board.board[SpritePieces[0][n].Pos.x][SpritePieces[0][n].Pos.y - 2] = BKing;
-                                                        for (size_t i = 0; i < SpritePieces->size(); i++)
-                                                        {
-                                                            if (SpritePieces[0][i].Pos == sf::Vector2i(Board.XMax - 1, 0))
-                                                            {
-                                                                SpritePieces[0][i].Pos = sf::Vector2i(Board.XMax - 1, 3);
-                                                                //cout << "00" << endl;
-                                                                posSetter(i);
-                                                                break;
-                                                            }
-                                                        }
-                                                        SpritePieces[0][n].Pos = sf::Vector2i(SpritePieces[0][n].Pos.x, SpritePieces[0][n].Pos.y - 2);
-                                                        posSetter(n);
-                                                    }
-                                                    MoveSound.play();
+                            Moves[Moves.size() - 1].Black = MoveFrTo(SpritePieces[0][n].Pos, sf::Vector2i(xx, yy), SpritePieces[0][n].Type, Board.board[xx][yy]);
+                            lastmove = LastMove(SpritePieces[0][n].Pos, sf::Vector2i(xx, yy), Board.board[SpritePieces[0][n].Pos.x][SpritePieces[0][n].Pos.y]);
+                            if (SpritePieces[0][n].Pos.y - yy < 0)
+                            {
+                                Board.board[SpritePieces[0][n].Pos.x][SpritePieces[0][n].Pos.y + 3] = EMPTYPiece;
+                                Board.board[SpritePieces[0][n].Pos.x][SpritePieces[0][n].Pos.y] = EMPTYPiece;
+                                Board.board[SpritePieces[0][n].Pos.x][SpritePieces[0][n].Pos.y + 1] = BRook;
+                                Board.board[SpritePieces[0][n].Pos.x][SpritePieces[0][n].Pos.y + 2] = BKing;
+                                for (size_t i = 0; i < SpritePieces->size(); i++)
+                                {
+                                    if (SpritePieces[0][i].Pos == sf::Vector2i(Board.XMax - 1, Board.YMax - 1))
+                                    {
+                                        SpritePieces[0][i].Pos = sf::Vector2i(Board.XMax - 1, Board.YMax - 1 - 2);
+                                        //cout << "000" << endl;
+                                        posSetter(i);
+                                        break;
+                                    }
+                                }
+                                SpritePieces[0][n].Pos = sf::Vector2i(SpritePieces[0][n].Pos.x, SpritePieces[0][n].Pos.y + 2);
+                                posSetter(n);
 
 
+                            }
+                            else
+                            {
+                                Board.board[SpritePieces[0][n].Pos.x][SpritePieces[0][n].Pos.y - 4] = EMPTYPiece;
+                                Board.board[SpritePieces[0][n].Pos.x][SpritePieces[0][n].Pos.y] = EMPTYPiece;
+                                Board.board[SpritePieces[0][n].Pos.x][SpritePieces[0][n].Pos.y - 1] = BRook;
+                                Board.board[SpritePieces[0][n].Pos.x][SpritePieces[0][n].Pos.y - 2] = BKing;
+                                for (size_t i = 0; i < SpritePieces->size(); i++)
+                                {
+                                    if (SpritePieces[0][i].Pos == sf::Vector2i(Board.XMax - 1, 0))
+                                    {
+                                        SpritePieces[0][i].Pos = sf::Vector2i(Board.XMax - 1, 3);
+                                        //cout << "00" << endl;
+                                        posSetter(i);
+                                        break;
+                                    }
+                                }
+                                SpritePieces[0][n].Pos = sf::Vector2i(SpritePieces[0][n].Pos.x, SpritePieces[0][n].Pos.y - 2);
+                                posSetter(n);
+                            }
+                            MoveSound.play();
 
-                                                }
+
+
+                        }
                         #pragma endregion
                         else
                         {
@@ -1334,6 +1336,7 @@ public:
                 break;
             }
         }
+        cout << "Deb\n";
         if (((SpritePieces[0][n].Type >= 0 && SpritePieces[0][n].Type <= 5) && !WorB) || ((SpritePieces[0][n].Type >= 6 && SpritePieces[0][n].Type <= 11) && WorB))
         {
             SpritePieces[0][n].Piece.setPosition(oldPos);
@@ -1971,6 +1974,13 @@ public:
                             Back = false;
                             NetBack = false;
                             MyNetBack = false;
+                            for (int i = 1; i < PacketMove.size(); i++)
+                            {
+                                if (!isalnum(PacketMove[i]))
+                                {
+                                    goto outOfChar;
+                                }
+                            }
                             if (PacketMove.length()<6)
                             {
                                 Mover((PacketMove[1] - '0'), (PacketMove[2] - '0'), (PacketMove[3] - '0'), (PacketMove[4] - '0'));
@@ -1979,7 +1989,7 @@ public:
                             {
                                 Mover((PacketMove[1] - '0'), (PacketMove[2] - '0'), (PacketMove[3] - '0'), (PacketMove[4] - '0'), (PacketMove[5] - '0'));
                             }
-                            
+                            outOfChar:
                             netMove = PacketMove;
                     }
                     else if (PacketMove[0] == 'b')
@@ -2331,7 +2341,7 @@ public:
     }
     /*
     * 0 - Ход недоступен
-    * 1 - Можно сделать ход либо удприть
+    * 1 - Можно сделать ход либо ударить
     * 2 - Превращение пешки при ходе на 1 клетку вперёд
     * 3 - Ход пешки на 2 клетки
     * 4 - Бой пешки с превращением

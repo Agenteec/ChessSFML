@@ -9,7 +9,6 @@ class NetClient
 public:
     NetClient(sf::IpAddress serverAddress, unsigned short serverPort)
     {
-        // Connect to the server
         if (m_socket.connect(serverAddress, serverPort) != sf::Socket::Done)
         {
             std::cerr << "Failed to connect to server " << serverAddress << ":" << serverPort << std::endl;
@@ -18,7 +17,6 @@ public:
 
         std::cout << "Connected to server " << serverAddress << ":" << serverPort << std::endl;
 
-        // Start the receiving thread
         m_receivingThread = std::thread([&]()
             {
                 while (true)
@@ -26,25 +24,21 @@ public:
                     sf::Packet packet;
                     if (m_socket.receive(packet) != sf::Socket::Done)
                     {
-                        // Server disconnected
                         std::cout << "Disconnected from server." << std::endl;
                         break;
                     }
                     std::stringstream ss;
                     ss << packet;
                     PacketMove = ss.str();
-                    // Process the packet
-                    // ...
                 }
             });
     }
 
     ~NetClient()
     {
-        // Disconnect from the server
+
         m_socket.disconnect();
 
-        // Wait for the receiving thread to finish
         if (m_receivingThread.joinable())
         {
             m_receivingThread.join();

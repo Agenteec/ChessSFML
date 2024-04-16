@@ -426,7 +426,7 @@ public:
                 ImGui::SliderFloat(uTC(u8"Время на партию"), &moveTime, 30.0f, 3600.0f, "%.0f sec");
                 ImGui::Combo(uTC(u8"Добавление секунд на ход"), &addTimeIndex, addTimes, 6);
             }
-            ImGui::Checkbox(uTC(u8"Рейтинговая партия"), &withRating);
+            //ImGui::Checkbox(uTC(u8"Рейтинговая партия"), &withRating);
             // Кнопки "Запуск" и "Отмена"
         }
 
@@ -451,7 +451,6 @@ public:
             showNetworkGameCreator = 0;
         }
 
-        // Завершение окна ImGui
 
         ImGui::End();
 
