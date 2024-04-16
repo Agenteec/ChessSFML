@@ -1,7 +1,8 @@
-#pragma once
+п»ї#pragma once
 
 
 #include <imgui.h>
+#include <string>
 #include "SFtoS.h"
 #include "CSettings.h"
 #include "OnGameUI.h"
@@ -23,10 +24,10 @@ public:
     static bool showRenderMenu;
 
 
-    ///Переместить в отдельный класс
-    static int gameMode; // Индекс выбранного режима игры
-    static float moveTime; // Количество секунд на ход
-    static int addTimeIndex; // Индекс выбранного времени для добавления
+    ///РџРµСЂРµРјРµСЃС‚РёС‚СЊ РІ РѕС‚РґРµР»СЊРЅС‹Р№ РєР»Р°СЃСЃ
+    static int gameMode; // РРЅРґРµРєСЃ РІС‹Р±СЂР°РЅРЅРѕРіРѕ СЂРµР¶РёРјР° РёРіСЂС‹
+    static float moveTime; // РљРѕР»РёС‡РµСЃС‚РІРѕ СЃРµРєСѓРЅРґ РЅР° С…РѕРґ
+    static int addTimeIndex; // РРЅРґРµРєСЃ РІС‹Р±СЂР°РЅРЅРѕРіРѕ РІСЂРµРјРµРЅРё РґР»СЏ РґРѕР±Р°РІР»РµРЅРёСЏ
     static DBController db;
 
 
@@ -36,7 +37,7 @@ public:
     static const char* addTimes[];
     static const float moveTimes[];
 
-    ///Переместить в отдельный класс\\\
+    ///РџРµСЂРµРјРµСЃС‚РёС‚СЊ РІ РѕС‚РґРµР»СЊРЅС‹Р№ РєР»Р°СЃСЃ\\\
 
     static bool OnGameGUI;
     static bool OnNetGameGUI;
@@ -76,9 +77,9 @@ public:
     static void ReloaderDialog();
     
     static void OpenURL(const std::string& url) {
-        // Формируем команду для открытия ссылки в браузере
-        std::string command = "start " + url; // В Linux средах используется xdg-open, в Windows можно использовать start
-        // Выполняем команду в командной строке
+        // Р¤РѕСЂРјРёСЂСѓРµРј РєРѕРјР°РЅРґСѓ РґР»СЏ РѕС‚РєСЂС‹С‚РёСЏ СЃСЃС‹Р»РєРё РІ Р±СЂР°СѓР·РµСЂРµ
+        std::string command = "start " + url; // Р’ Linux СЃСЂРµРґР°С… РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ xdg-open, РІ Windows РјРѕР¶РЅРѕ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ start
+        // Р’С‹РїРѕР»РЅСЏРµРј РєРѕРјР°РЅРґСѓ РІ РєРѕРјР°РЅРґРЅРѕР№ СЃС‚СЂРѕРєРµ
         system(command.c_str());
     }
 
@@ -87,45 +88,45 @@ public:
         ImGui::GetStyle().Colors[ImGuiCol_WindowBg] = ImVec4(0.0f, 0.0f, 0.0f, 0.8f);
         if (showRule)
         {
-            ImGui::Begin(uTC(u8"Правила"), &showRule);
+            ImGui::Begin(uTC(u8"РџСЂР°РІРёР»Р°"), &showRule);
 
-            ImGui::Text(uTC(u8"Правила игры:"));
-            ImGui::Text(uTC(u8"1. Цель игры: Целью игры в шахматы является мат – состояние, когда король любого из игроков находится под угрозой захвата и не имеет возможности избежать захвата."));
-            ImGui::Text(uTC(u8"2. Фигуры и их ходы:"));
-            ImGui::Text(uTC(u8" Король: Может ходить на любое соседнее поле."));
-            ImGui::Text(uTC(u8" Ферзь : Может ходить по горизонтали, вертикали и диагонали."));
-            ImGui::Text(uTC(u8" Ладья : Двигается только по горизонтали и вертикали."));
-            ImGui::Text(uTC(u8" Слон : Двигается только по диагонали."));
-            ImGui::Text(uTC(u8" Конь : Ходит буквой Г – два поля в одном направлении и одно перпендикулярно ему."));
-            ImGui::Text(uTC(u8" Пешка : Ходит вперед на одно поле, но с начальной позиции может сделать два шага.Бьет фигуры по диагонали на одно поле.."));
-            ImGui::Text(uTC(u8"3. Рокировка: Специальный ход, при котором король и ладья одновременно перемещаются. Он может быть выполнен только в случае, если ни король, ни ладья не сделали ход, и между ними нет других фигур."));
-            ImGui::Text(uTC(u8"4. Взятие на проходе: Возможность пешки атаковать пешку соперника, которая двинулась на два поля из начальной позиции. Пешка противника может взять ее как будто она двигалась только на одно поле."));
-            ImGui::Text(uTC(u8"5. Превращение пешки: Если пешка достигает последнего ряда доски, она должна быть заменена на фигуру, на выбор игрока."));
-            ImGui::Text(uTC(u8"6. Пат: Ситуация, когда у игрока нет возможности сделать ход, но его король не находится под шахом. Это объявляется ничьей."));
-            ImGui::Text(uTC(u8"7. Мат: Ситуация, когда король находится под прямой атакой и не имеет возможности избежать захвата."));
+            ImGui::Text(uTC(u8"РџСЂР°РІРёР»Р° РёРіСЂС‹:"));
+            ImGui::Text(uTC(u8"1. Р¦РµР»СЊ РёРіСЂС‹: Р¦РµР»СЊСЋ РёРіСЂС‹ РІ С€Р°С…РјР°С‚С‹ СЏРІР»СЏРµС‚СЃСЏ РјР°С‚ вЂ“ СЃРѕСЃС‚РѕСЏРЅРёРµ, РєРѕРіРґР° РєРѕСЂРѕР»СЊ Р»СЋР±РѕРіРѕ РёР· РёРіСЂРѕРєРѕРІ РЅР°С…РѕРґРёС‚СЃСЏ РїРѕРґ СѓРіСЂРѕР·РѕР№ Р·Р°С…РІР°С‚Р° Рё РЅРµ РёРјРµРµС‚ РІРѕР·РјРѕР¶РЅРѕСЃС‚Рё РёР·Р±РµР¶Р°С‚СЊ Р·Р°С…РІР°С‚Р°."));
+            ImGui::Text(uTC(u8"2. Р¤РёРіСѓСЂС‹ Рё РёС… С…РѕРґС‹:"));
+            ImGui::Text(uTC(u8" РљРѕСЂРѕР»СЊ: РњРѕР¶РµС‚ С…РѕРґРёС‚СЊ РЅР° Р»СЋР±РѕРµ СЃРѕСЃРµРґРЅРµРµ РїРѕР»Рµ."));
+            ImGui::Text(uTC(u8" Р¤РµСЂР·СЊ : РњРѕР¶РµС‚ С…РѕРґРёС‚СЊ РїРѕ РіРѕСЂРёР·РѕРЅС‚Р°Р»Рё, РІРµСЂС‚РёРєР°Р»Рё Рё РґРёР°РіРѕРЅР°Р»Рё."));
+            ImGui::Text(uTC(u8" Р›Р°РґСЊСЏ : Р”РІРёРіР°РµС‚СЃСЏ С‚РѕР»СЊРєРѕ РїРѕ РіРѕСЂРёР·РѕРЅС‚Р°Р»Рё Рё РІРµСЂС‚РёРєР°Р»Рё."));
+            ImGui::Text(uTC(u8" РЎР»РѕРЅ : Р”РІРёРіР°РµС‚СЃСЏ С‚РѕР»СЊРєРѕ РїРѕ РґРёР°РіРѕРЅР°Р»Рё."));
+            ImGui::Text(uTC(u8" РљРѕРЅСЊ : РҐРѕРґРёС‚ Р±СѓРєРІРѕР№ Р“ вЂ“ РґРІР° РїРѕР»СЏ РІ РѕРґРЅРѕРј РЅР°РїСЂР°РІР»РµРЅРёРё Рё РѕРґРЅРѕ РїРµСЂРїРµРЅРґРёРєСѓР»СЏСЂРЅРѕ РµРјСѓ."));
+            ImGui::Text(uTC(u8" РџРµС€РєР° : РҐРѕРґРёС‚ РІРїРµСЂРµРґ РЅР° РѕРґРЅРѕ РїРѕР»Рµ, РЅРѕ СЃ РЅР°С‡Р°Р»СЊРЅРѕР№ РїРѕР·РёС†РёРё РјРѕР¶РµС‚ СЃРґРµР»Р°С‚СЊ РґРІР° С€Р°РіР°.Р‘СЊРµС‚ С„РёРіСѓСЂС‹ РїРѕ РґРёР°РіРѕРЅР°Р»Рё РЅР° РѕРґРЅРѕ РїРѕР»Рµ.."));
+            ImGui::Text(uTC(u8"3. Р РѕРєРёСЂРѕРІРєР°: РЎРїРµС†РёР°Р»СЊРЅС‹Р№ С…РѕРґ, РїСЂРё РєРѕС‚РѕСЂРѕРј РєРѕСЂРѕР»СЊ Рё Р»Р°РґСЊСЏ РѕРґРЅРѕРІСЂРµРјРµРЅРЅРѕ РїРµСЂРµРјРµС‰Р°СЋС‚СЃСЏ. РћРЅ РјРѕР¶РµС‚ Р±С‹С‚СЊ РІС‹РїРѕР»РЅРµРЅ С‚РѕР»СЊРєРѕ РІ СЃР»СѓС‡Р°Рµ, РµСЃР»Рё РЅРё РєРѕСЂРѕР»СЊ, РЅРё Р»Р°РґСЊСЏ РЅРµ СЃРґРµР»Р°Р»Рё С…РѕРґ, Рё РјРµР¶РґСѓ РЅРёРјРё РЅРµС‚ РґСЂСѓРіРёС… С„РёРіСѓСЂ."));
+            ImGui::Text(uTC(u8"4. Р’Р·СЏС‚РёРµ РЅР° РїСЂРѕС…РѕРґРµ: Р’РѕР·РјРѕР¶РЅРѕСЃС‚СЊ РїРµС€РєРё Р°С‚Р°РєРѕРІР°С‚СЊ РїРµС€РєСѓ СЃРѕРїРµСЂРЅРёРєР°, РєРѕС‚РѕСЂР°СЏ РґРІРёРЅСѓР»Р°СЃСЊ РЅР° РґРІР° РїРѕР»СЏ РёР· РЅР°С‡Р°Р»СЊРЅРѕР№ РїРѕР·РёС†РёРё. РџРµС€РєР° РїСЂРѕС‚РёРІРЅРёРєР° РјРѕР¶РµС‚ РІР·СЏС‚СЊ РµРµ РєР°Рє Р±СѓРґС‚Рѕ РѕРЅР° РґРІРёРіР°Р»Р°СЃСЊ С‚РѕР»СЊРєРѕ РЅР° РѕРґРЅРѕ РїРѕР»Рµ."));
+            ImGui::Text(uTC(u8"5. РџСЂРµРІСЂР°С‰РµРЅРёРµ РїРµС€РєРё: Р•СЃР»Рё РїРµС€РєР° РґРѕСЃС‚РёРіР°РµС‚ РїРѕСЃР»РµРґРЅРµРіРѕ СЂСЏРґР° РґРѕСЃРєРё, РѕРЅР° РґРѕР»Р¶РЅР° Р±С‹С‚СЊ Р·Р°РјРµРЅРµРЅР° РЅР° С„РёРіСѓСЂСѓ, РЅР° РІС‹Р±РѕСЂ РёРіСЂРѕРєР°."));
+            ImGui::Text(uTC(u8"6. РџР°С‚: РЎРёС‚СѓР°С†РёСЏ, РєРѕРіРґР° Сѓ РёРіСЂРѕРєР° РЅРµС‚ РІРѕР·РјРѕР¶РЅРѕСЃС‚Рё СЃРґРµР»Р°С‚СЊ С…РѕРґ, РЅРѕ РµРіРѕ РєРѕСЂРѕР»СЊ РЅРµ РЅР°С…РѕРґРёС‚СЃСЏ РїРѕРґ С€Р°С…РѕРј. Р­С‚Рѕ РѕР±СЉСЏРІР»СЏРµС‚СЃСЏ РЅРёС‡СЊРµР№."));
+            ImGui::Text(uTC(u8"7. РњР°С‚: РЎРёС‚СѓР°С†РёСЏ, РєРѕРіРґР° РєРѕСЂРѕР»СЊ РЅР°С…РѕРґРёС‚СЃСЏ РїРѕРґ РїСЂСЏРјРѕР№ Р°С‚Р°РєРѕР№ Рё РЅРµ РёРјРµРµС‚ РІРѕР·РјРѕР¶РЅРѕСЃС‚Рё РёР·Р±РµР¶Р°С‚СЊ Р·Р°С…РІР°С‚Р°."));
 
-            if (ImGui::Button(uTC(u8"Итальянская партия")))
+            if (ImGui::Button(uTC(u8"РС‚Р°Р»СЊСЏРЅСЃРєР°СЏ РїР°СЂС‚РёСЏ")))
             {
                 OpenURL("https://lichess.org/study/QUXJ1WH3/gK5JfSwK");
             }
             ImGui::SameLine();
-            if (ImGui::Button(uTC(u8"Приятный Ферзевй Гамбит")))
+            if (ImGui::Button(uTC(u8"РџСЂРёСЏС‚РЅС‹Р№ Р¤РµСЂР·РµРІР№ Р“Р°РјР±РёС‚")))
             {
                 OpenURL("https://lichess.org/study/QUXJ1WH3/CnvGZGnf");
             }
             ImGui::SameLine();
 
-            if (ImGui::Button(uTC(u8"Дебют Сокольского")))
+            if (ImGui::Button(uTC(u8"Р”РµР±СЋС‚ РЎРѕРєРѕР»СЊСЃРєРѕРіРѕ")))
             {
                 OpenURL("https://lichess.org/study/QUXJ1WH3/jjXjIEgi");
             }
-            if (ImGui::Button(uTC(u8"Дебют четырёх коней")))
+            if (ImGui::Button(uTC(u8"Р”РµР±СЋС‚ С‡РµС‚С‹СЂС‘С… РєРѕРЅРµР№")))
             {
                 OpenURL("https://lichess.org/study/QUXJ1WH3/pBeyrqxN");
             }
             ImGui::SameLine();
 
-            if (ImGui::Button(uTC(u8"Русская партия")))
+            if (ImGui::Button(uTC(u8"Р СѓСЃСЃРєР°СЏ РїР°СЂС‚РёСЏ")))
             {
                 OpenURL("https://lichess.org/study/QUXJ1WH3/2kPECrhW");
             }
@@ -133,14 +134,14 @@ public:
 
         }
 
-        // Выбор режима игры
+        // Р’С‹Р±РѕСЂ СЂРµР¶РёРјР° РёРіСЂС‹
 
-        if (ImGui::Button(uTC(u8"Отмена")))
+        if (ImGui::Button(uTC(u8"РћС‚РјРµРЅР°")))
         {
             showRule = 0;
         }
 
-        // Завершение окна ImGui
+        // Р—Р°РІРµСЂС€РµРЅРёРµ РѕРєРЅР° ImGui
 
         ImGui::End();
 
@@ -148,10 +149,10 @@ public:
 
     static void ShowProfile()
     {
-        ImGui::Begin(uTC(u8"Управление профилями"), &showProfile);
+        ImGui::Begin(uTC(u8"РЈРїСЂР°РІР»РµРЅРёРµ РїСЂРѕС„РёР»СЏРјРё"), &showProfile);
         if (db.users.empty())
         {
-            ImGui::Text(uTC(u8"Пользователь не выбран, добавьте пользователя"));
+            ImGui::Text(uTC(u8"РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ РІС‹Р±СЂР°РЅ, РґРѕР±Р°РІСЊС‚Рµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ"));
         }
         else
         {
@@ -166,15 +167,15 @@ public:
         }
 
         static char nameBuffer[64];
-        ImGui::InputText(uTC(u8"Имя пользователя"), nameBuffer, IM_ARRAYSIZE(nameBuffer));
-        if (ImGui::Button(uTC(u8"Добавить"))) {
+        ImGui::InputText(uTC(u8"РРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ"), nameBuffer, IM_ARRAYSIZE(nameBuffer));
+        if (ImGui::Button(uTC(u8"Р”РѕР±Р°РІРёС‚СЊ"))) {
             db.createUser(nameBuffer);
             memset(nameBuffer, 0, sizeof(nameBuffer));
         }
 
-        ImGui::Text(uTC(u8"Список пользователей:"));
+        ImGui::Text(uTC(u8"РЎРїРёСЃРѕРє РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№:"));
         if (ImGui::BeginTable("##table1", 3)) {
-            ImGui::TableSetupColumn(uTC(u8"Имя"));
+            ImGui::TableSetupColumn(uTC(u8"РРјСЏ"));
             ImGui::TableSetupColumn(uTC(u8"ID"));
             ImGui::TableSetupColumn("");
             ImGui::TableHeadersRow();
@@ -186,11 +187,11 @@ public:
                 ImGui::TableSetColumnIndex(1);
                 ImGui::Text("%d", user.id);
                 ImGui::TableSetColumnIndex(2);
-                if (ImGui::Button((uTC(u8"Удалить##") + std::to_string(user.id)).c_str())) {
+                if (ImGui::Button((uTC(u8"РЈРґР°Р»РёС‚СЊ##") + std::to_string(user.id)).c_str())) {
                     db.deleteUser(user.id);
                 }
                 ImGui::SameLine();
-                if (ImGui::Button((uTC(u8"Выбрать##") + std::to_string(user.id)).c_str())) {
+                if (ImGui::Button((uTC(u8"Р’С‹Р±СЂР°С‚СЊ##") + std::to_string(user.id)).c_str())) {
                     userId = user.id;
                 }
 
@@ -205,10 +206,10 @@ public:
     
     static void ShowControlSettings()
     {
-        if (ImGui::CollapsingHeader(uTC(u8"Клавиатура")))
+        if (ImGui::CollapsingHeader(uTC(u8"РљР»Р°РІРёР°С‚СѓСЂР°")))
         {
-            #pragma region Прыжок
-            ImGui::Text((uTC(u8"Прыжок")));
+            #pragma region РџСЂС‹Р¶РѕРє
+            ImGui::Text((uTC(u8"РџСЂС‹Р¶РѕРє")));
             ImGui::SameLine();
             ImGui::PushID("Jump");
 
@@ -233,7 +234,7 @@ public:
 
             
 
-            ImGui::Text(uTC(u8"Атака"));
+            ImGui::Text(uTC(u8"РђС‚Р°РєР°"));
             ImGui::SameLine();
             ImGui::PushID(uTC(u8"Shoot"));
             if (ImGui::Button(SFtoS::toString(tempSettings.controls.Attack).c_str()))
@@ -258,9 +259,9 @@ public:
 
     static void showGraphicsSettings()
     {
-        ImGui::Text(uTC(u8"Настройки графики"));
-        ImGui::SliderFloat(uTC(u8"Яркость"), &tempSettings.video.brightness, 0.0f, 1.0f);
-        ImGui::Text(uTC(u8"Размер окна"));
+        ImGui::Text(uTC(u8"РќР°СЃС‚СЂРѕР№РєРё РіСЂР°С„РёРєРё"));
+        ImGui::SliderFloat(uTC(u8"РЇСЂРєРѕСЃС‚СЊ"), &tempSettings.video.brightness, 0.0f, 1.0f);
+        ImGui::Text(uTC(u8"Р Р°Р·РјРµСЂ РѕРєРЅР°"));
         ImGui::SameLine();
         ImGui::PushID("WinSize");
 
@@ -320,7 +321,7 @@ public:
         }
         ImGui::PopID();
         ImGui::Checkbox("Vsynk", &tempSettings.video.Vsynk);
-        ImGui::Checkbox(uTC(u8"Полный экран"), &tempSettings.video.FullScreen);
+        ImGui::Checkbox(uTC(u8"РџРѕР»РЅС‹Р№ СЌРєСЂР°РЅ"), &tempSettings.video.FullScreen);
         ImGui::Text("FrameRateLimit");
         ImGui::SameLine();
         ImGui::PushID("FrameRateLimit");
@@ -361,29 +362,29 @@ public:
 
     static void ShowLocalGame()
     {
-        ImGui::Begin(uTC(u8"Создание локальной игры"),&showLocalGame);
+        ImGui::Begin(uTC(u8"РЎРѕР·РґР°РЅРёРµ Р»РѕРєР°Р»СЊРЅРѕР№ РёРіСЂС‹"),&showLocalGame);
 
-        // Выбор режима игры
+        // Р’С‹Р±РѕСЂ СЂРµР¶РёРјР° РёРіСЂС‹
 
-        ImGui::Text(uTC(u8"Игровой режим:"));
+        ImGui::Text(uTC(u8"РРіСЂРѕРІРѕР№ СЂРµР¶РёРј:"));
         ImGui::ListBox("##gamemode", &RenderMenu::gameMode, gameModes, 1, 4);
 
-        // Выбор контроля времени
+        // Р’С‹Р±РѕСЂ РєРѕРЅС‚СЂРѕР»СЏ РІСЂРµРјРµРЅРё
         if (RenderMenu::gameMode != 7)
         {
-            ImGui::Checkbox(uTC(u8"Контроль времени"), &isControlTime);
+            ImGui::Checkbox(uTC(u8"РљРѕРЅС‚СЂРѕР»СЊ РІСЂРµРјРµРЅРё"), &isControlTime);
             if (isControlTime)
             {
-                ImGui::Text(uTC(u8"Контроль времени:"));
-                ImGui::SliderFloat(uTC(u8"Время на партию"), &moveTime, 30.0f, 3600.0f, "%.0f sec");
-                ImGui::Combo(uTC(u8"Добавление секунд на ход"), &addTimeIndex, addTimes, 6);
+                ImGui::Text(uTC(u8"РљРѕРЅС‚СЂРѕР»СЊ РІСЂРµРјРµРЅРё:"));
+                ImGui::SliderFloat(uTC(u8"Р’СЂРµРјСЏ РЅР° РїР°СЂС‚РёСЋ"), &moveTime, 30.0f, 3600.0f, "%.0f sec");
+                ImGui::Combo(uTC(u8"Р”РѕР±Р°РІР»РµРЅРёРµ СЃРµРєСѓРЅРґ РЅР° С…РѕРґ"), &addTimeIndex, addTimes, 6);
             }
-            ImGui::Checkbox(uTC(u8"Рейтинговая партия"), &withRating);
-            // Кнопки "Запуск" и "Отмена"
+            ImGui::Checkbox(uTC(u8"Р РµР№С‚РёРЅРіРѕРІР°СЏ РїР°СЂС‚РёСЏ"), &withRating);
+            // РљРЅРѕРїРєРё "Р—Р°РїСѓСЃРє" Рё "РћС‚РјРµРЅР°"
         }
         
 
-        if (ImGui::Button(uTC(u8"Запуск")))
+        if (ImGui::Button(uTC(u8"Р—Р°РїСѓСЃРє")))
         {
             showRenderMenu = false;
             showLocalGame = false;
@@ -395,12 +396,12 @@ public:
 
         ImGui::SameLine();
 
-        if (ImGui::Button(uTC(u8"Отмена")))
+        if (ImGui::Button(uTC(u8"РћС‚РјРµРЅР°")))
         {
             showLocalGame = 0;
         }
 
-        // Завершение окна ImGui
+        // Р—Р°РІРµСЂС€РµРЅРёРµ РѕРєРЅР° ImGui
 
         ImGui::End();
 
@@ -408,30 +409,30 @@ public:
 
     static void ShowNetworkGame()
     {
-        ImGui::Begin(uTC(u8"Создание сетевой игры"), &showNetworkGameCreator);
+        ImGui::Begin(uTC(u8"РЎРѕР·РґР°РЅРёРµ СЃРµС‚РµРІРѕР№ РёРіСЂС‹"), &showNetworkGameCreator);
 
-        // Выбор режима игры
+        // Р’С‹Р±РѕСЂ СЂРµР¶РёРјР° РёРіСЂС‹
 
-        ImGui::Text(uTC(u8"Игровой режим:"));
+        ImGui::Text(uTC(u8"РРіСЂРѕРІРѕР№ СЂРµР¶РёРј:"));
         ImGui::ListBox("##gamemode", &RenderMenu::gameMode, gameModes, 1, 4);
 
-        // Выбор контроля времени
+        // Р’С‹Р±РѕСЂ РєРѕРЅС‚СЂРѕР»СЏ РІСЂРµРјРµРЅРё
 
         if (RenderMenu::gameMode != 7)
         {
-            ImGui::Checkbox(uTC(u8"Контроль времени"), &isControlTime);
+            ImGui::Checkbox(uTC(u8"РљРѕРЅС‚СЂРѕР»СЊ РІСЂРµРјРµРЅРё"), &isControlTime);
             if (isControlTime)
             {
-                ImGui::Text(uTC(u8"Контроль времени:"));
-                ImGui::SliderFloat(uTC(u8"Время на партию"), &moveTime, 30.0f, 3600.0f, "%.0f sec");
-                ImGui::Combo(uTC(u8"Добавление секунд на ход"), &addTimeIndex, addTimes, 6);
+                ImGui::Text(uTC(u8"РљРѕРЅС‚СЂРѕР»СЊ РІСЂРµРјРµРЅРё:"));
+                ImGui::SliderFloat(uTC(u8"Р’СЂРµРјСЏ РЅР° РїР°СЂС‚РёСЋ"), &moveTime, 30.0f, 3600.0f, "%.0f sec");
+                ImGui::Combo(uTC(u8"Р”РѕР±Р°РІР»РµРЅРёРµ СЃРµРєСѓРЅРґ РЅР° С…РѕРґ"), &addTimeIndex, addTimes, 6);
             }
-            //ImGui::Checkbox(uTC(u8"Рейтинговая партия"), &withRating);
-            // Кнопки "Запуск" и "Отмена"
+            //ImGui::Checkbox(uTC(u8"Р РµР№С‚РёРЅРіРѕРІР°СЏ РїР°СЂС‚РёСЏ"), &withRating);
+            // РљРЅРѕРїРєРё "Р—Р°РїСѓСЃРє" Рё "РћС‚РјРµРЅР°"
         }
 
 
-        if (ImGui::Button(uTC(u8"Запуск")))
+        if (ImGui::Button(uTC(u8"Р—Р°РїСѓСЃРє")))
         {
             StartServer();
             is_server_waiting = true;
@@ -446,7 +447,7 @@ public:
 
         ImGui::SameLine();
 
-        if (ImGui::Button(uTC(u8"Отмена")))
+        if (ImGui::Button(uTC(u8"РћС‚РјРµРЅР°")))
         {
             showNetworkGameCreator = 0;
         }
@@ -458,13 +459,13 @@ public:
 
     static void NetworkMenu()
     {
-        ImGui::Begin(uTC(u8"Сетевая игра"),&showNetworkGame);
+        ImGui::Begin(uTC(u8"РЎРµС‚РµРІР°СЏ РёРіСЂР°"),&showNetworkGame);
 
-        ImGui::Text(uTC(u8"Подключение к серверу"));
-        static char serverAddress[64] = "127.0.0.1"; // IP-адрес сервера
-        ImGui::InputText(uTC(u8"Адрес сервера"), serverAddress, 64);
+        ImGui::Text(uTC(u8"РџРѕРґРєР»СЋС‡РµРЅРёРµ Рє СЃРµСЂРІРµСЂСѓ"));
+        static char serverAddress[64] = "127.0.0.1"; // IP-Р°РґСЂРµСЃ СЃРµСЂРІРµСЂР°
+        ImGui::InputText(uTC(u8"РђРґСЂРµСЃ СЃРµСЂРІРµСЂР°"), serverAddress, 64);
 
-        if (ImGui::Button(uTC(u8"Подключиться"))) {
+        if (ImGui::Button(uTC(u8"РџРѕРґРєР»СЋС‡РёС‚СЊСЃСЏ"))) {
             cout << serverAddress << endl;
             CGlobalSettings.network.ip = serverAddress;
             ServerOrClient = false;
@@ -481,12 +482,12 @@ public:
         ImGui::Separator();
 
 
-        //ImGui::Text(uTC(u8"Список доступных игр"));
-        //static std::vector<std::string> games;// = GetAvailableGames(); // Получение списка доступных игр
+        //ImGui::Text(uTC(u8"РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РёРіСЂ"));
+        //static std::vector<std::string> games;// = GetAvailableGames(); // РџРѕР»СѓС‡РµРЅРёРµ СЃРїРёСЃРєР° РґРѕСЃС‚СѓРїРЅС‹С… РёРіСЂ
         //games.push_back("127.0.0.1");
-        //static int selectedGame = 0; // Индекс выбранной игры
-        //static bool gameListChanged = true; // Флаг изменения списка игр
-        //if (ImGui::BeginListBox(uTC(u8"##Список игр"), ImVec2(-1, 100))) {
+        //static int selectedGame = 0; // РРЅРґРµРєСЃ РІС‹Р±СЂР°РЅРЅРѕР№ РёРіСЂС‹
+        //static bool gameListChanged = true; // Р¤Р»Р°Рі РёР·РјРµРЅРµРЅРёСЏ СЃРїРёСЃРєР° РёРіСЂ
+        //if (ImGui::BeginListBox(uTC(u8"##РЎРїРёСЃРѕРє РёРіСЂ"), ImVec2(-1, 100))) {
         //    for (int i = 0; i < games.size(); i++) {
         //        bool isSelected = (selectedGame == i);
         //        if (ImGui::Selectable(games[i].c_str(), isSelected)) {
@@ -499,20 +500,20 @@ public:
         //    ImGui::EndListBox();
         //}
 
-        //if (ImGui::Button(uTC(u8"Обновить список игр"))) {
-        //    // Обработка нажатия на кнопку "Обновить список игр"
+        //if (ImGui::Button(uTC(u8"РћР±РЅРѕРІРёС‚СЊ СЃРїРёСЃРѕРє РёРіСЂ"))) {
+        //    // РћР±СЂР°Р±РѕС‚РєР° РЅР°Р¶Р°С‚РёСЏ РЅР° РєРЅРѕРїРєСѓ "РћР±РЅРѕРІРёС‚СЊ СЃРїРёСЃРѕРє РёРіСЂ"
         //    //games = GetAvailableGames();
         //    gameListChanged = true;
         //}
 
         ImGui::Separator();
 
-        if (ImGui::Button(uTC(u8"Создать новую игру"))) {
+        if (ImGui::Button(uTC(u8"РЎРѕР·РґР°С‚СЊ РЅРѕРІСѓСЋ РёРіСЂСѓ"))) {
             showNetworkGameCreator = true;
         }
 
-        //if (ImGui::Button(uTC(u8"Присоединиться к выбранной игре"))) {
-        //    // Обработка нажатия на кнопку "Присоединиться к выбранной игре"
+        //if (ImGui::Button(uTC(u8"РџСЂРёСЃРѕРµРґРёРЅРёС‚СЊСЃСЏ Рє РІС‹Р±СЂР°РЅРЅРѕР№ РёРіСЂРµ"))) {
+        //    // РћР±СЂР°Р±РѕС‚РєР° РЅР°Р¶Р°С‚РёСЏ РЅР° РєРЅРѕРїРєСѓ "РџСЂРёСЃРѕРµРґРёРЅРёС‚СЊСЃСЏ Рє РІС‹Р±СЂР°РЅРЅРѕР№ РёРіСЂРµ"
         //    if (selectedGame >= 0 && selectedGame < games.size()) {
         //        //JoinGame(games[selectedGame]);
         //    }
@@ -524,8 +525,8 @@ public:
     static void SerwerWait()
     {
             ImGui::Begin(uTC(u8"Waiting for opponent"), &is_server_waiting, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
-            ImGui::Text(uTC(u8"Пожалуйста, подождите пока к вам не подключится опонент..."));
-            if (ImGui::Button(uTC(u8"Отмена")))
+            ImGui::Text(uTC(u8"РџРѕР¶Р°Р»СѓР№СЃС‚Р°, РїРѕРґРѕР¶РґРёС‚Рµ РїРѕРєР° Рє РІР°Рј РЅРµ РїРѕРґРєР»СЋС‡РёС‚СЃСЏ РѕРїРѕРЅРµРЅС‚..."));
+            if (ImGui::Button(uTC(u8"РћС‚РјРµРЅР°")))
             {
                 //is_cancelled = true;
             }
@@ -534,16 +535,16 @@ public:
     }
 
     static void ImGuiFunctionDebug() {
-        // Создаем статические переменные для отслеживания времени и FPS
+        // РЎРѕР·РґР°РµРј СЃС‚Р°С‚РёС‡РµСЃРєРёРµ РїРµСЂРµРјРµРЅРЅС‹Рµ РґР»СЏ РѕС‚СЃР»РµР¶РёРІР°РЅРёСЏ РІСЂРµРјРµРЅРё Рё FPS
 
 
-        // Обновляем время прошедшее с последнего обновления кадра
+        // РћР±РЅРѕРІР»СЏРµРј РІСЂРµРјСЏ РїСЂРѕС€РµРґС€РµРµ СЃ РїРѕСЃР»РµРґРЅРµРіРѕ РѕР±РЅРѕРІР»РµРЅРёСЏ РєР°РґСЂР°
         const float current_time = ImGui::GetTime();
         deltaTime = current_time - lastFrameTime;
         lastFrameTime = current_time;
         fps = 1.0f / deltaTime;
 
-        // Отображаем значение FPS
+        // РћС‚РѕР±СЂР°Р¶Р°РµРј Р·РЅР°С‡РµРЅРёРµ FPS
         ImGui::Begin(uTC(u8"Debug"), nullptr);
         ImGui::Text("FPS: %d", fps);
         ImGui::End();
@@ -557,23 +558,23 @@ public:
         {
             ImGui::SetNextWindowSize(ImVec2(800, 400), ImGuiCond_FirstUseEver);
             ImGui::SetNextWindowPos(ImVec2(100, 100), ImGuiCond_FirstUseEver);
-            ImGui::Begin(uTC(u8"Настройки"), &showSettings);
+            ImGui::Begin(uTC(u8"РќР°СЃС‚СЂРѕР№РєРё"), &showSettings);
 
-            if (ImGui::Button(uTC(u8"Графика")))
+            if (ImGui::Button(uTC(u8"Р“СЂР°С„РёРєР°")))
             {
                 ShowGraphicsSettings = true;
                 //showControlsSettings = false;
                 //showSoundSettings = false;
             }
             /*ImGui::SameLine();
-            if (ImGui::Button(uTC(u8"Управление")))
+            if (ImGui::Button(uTC(u8"РЈРїСЂР°РІР»РµРЅРёРµ")))
             {
                 ShowGraphicsSettings = false;
                 showControlsSettings = true;
                 showSoundSettings = false;
             }
             ImGui::SameLine();
-            if (ImGui::Button(uTC(u8"Звук")))
+            if (ImGui::Button(uTC(u8"Р—РІСѓРє")))
             {
                 ShowGraphicsSettings = false;
                 showControlsSettings = false;
@@ -586,14 +587,14 @@ public:
             }
             //else if (showControlsSettings)
             //{
-            //    ImGui::Text(uTC(u8"Настройки управления"));
+            //    ImGui::Text(uTC(u8"РќР°СЃС‚СЂРѕР№РєРё СѓРїСЂР°РІР»РµРЅРёСЏ"));
             //    ShowControlSettings();
             //}
             //else if (showSoundSettings)
             //{
-            //    ImGui::Text(uTC(u8"Настройки звука"));
-            //    ImGui::SliderFloat(uTC(u8"Громкость окружения"), &tempSettings.volume.ambientVolume, 0.0f, 1.0f);
-            //    ImGui::SliderFloat(uTC(u8"Громкость музыки"), &tempSettings.volume.musicVolume, 0.0f, 1.0f);
+            //    ImGui::Text(uTC(u8"РќР°СЃС‚СЂРѕР№РєРё Р·РІСѓРєР°"));
+            //    ImGui::SliderFloat(uTC(u8"Р“СЂРѕРјРєРѕСЃС‚СЊ РѕРєСЂСѓР¶РµРЅРёСЏ"), &tempSettings.volume.ambientVolume, 0.0f, 1.0f);
+            //    ImGui::SliderFloat(uTC(u8"Р“СЂРѕРјРєРѕСЃС‚СЊ РјСѓР·С‹РєРё"), &tempSettings.volume.musicVolume, 0.0f, 1.0f);
             //}
 
             ImGui::Separator();
@@ -602,7 +603,7 @@ public:
 
             ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(5, 0)); 
             ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.3f, 0.8f, 0.3f, 1.0f)); 
-            if (ImGui::Button(uTC(u8"Ок"), ImVec2(80, 0))) {
+            if (ImGui::Button(uTC(u8"РћРє"), ImVec2(80, 0))) {
 
                 showSettings = false;
                 if (tempSettings.SetSettings(window) || tempSettings.video.FullScreen != CGlobalSettings.video.FullScreen)
@@ -617,7 +618,7 @@ public:
             ImGui::SameLine();
             ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(5, 0));
             ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.8f, 0.3f, 0.3f, 1.0f));
-            if (ImGui::Button(uTC(u8"Отмена"), ImVec2(80, 0))) {
+            if (ImGui::Button(uTC(u8"РћС‚РјРµРЅР°"), ImVec2(80, 0))) {
 
                 tempSettings = CGlobalSettings;
                 showSettings = false;
@@ -629,8 +630,8 @@ public:
             ImGui::SameLine();
             ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(5, 0));
             ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.3f, 0.3f, 0.8f, 1.0f));
-            if (ImGui::Button(uTC(u8"Применить"), ImVec2(100, 0))) {
-                // Действия, выполняемые при нажатии на кнопку
+            if (ImGui::Button(uTC(u8"РџСЂРёРјРµРЅРёС‚СЊ"), ImVec2(100, 0))) {
+                // Р”РµР№СЃС‚РІРёСЏ, РІС‹РїРѕР»РЅСЏРµРјС‹Рµ РїСЂРё РЅР°Р¶Р°С‚РёРё РЅР° РєРЅРѕРїРєСѓ
                 if (tempSettings.SetSettings(window)|| tempSettings.video.FullScreen != CGlobalSettings.video.FullScreen)
                 {
                     showReloadDialog = true;
@@ -675,61 +676,61 @@ public:
         {
             ShowProfile();
         }
-        // Создание главного окна imgui
+        // РЎРѕР·РґР°РЅРёРµ РіР»Р°РІРЅРѕРіРѕ РѕРєРЅР° imgui
         ImGui::SetNextWindowSizeConstraints(ImVec2(RenderMenu::CGlobalSettings.video.WinW, RenderMenu::CGlobalSettings.video.WinH), ImVec2(FLT_MAX, FLT_MAX));
         ImGui::SetNextWindowSize(ImVec2(RenderMenu::CGlobalSettings.video.WinW, RenderMenu::CGlobalSettings.video.WinH), ImGuiCond_FirstUseEver);
         ImGui::SetNextWindowPos(ImVec2(0, 0));
         ImGui::GetStyle().Colors[ImGuiCol_WindowBg] = ImVec4(0.0f, 0.0f, 0.0f, 0.25f);
         ImGui::Begin(VersionBuildStr.c_str(), nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoBringToFrontOnFocus);
 
-        // Отрисовка кнопок
+        // РћС‚СЂРёСЃРѕРІРєР° РєРЅРѕРїРѕРє
         ImGui::Dummy(ImVec2(10.0f, RenderMenu::CGlobalSettings.video.WinH / 2));
         if (OnGameGUI)
-            if (ImGui::Button(uTC(u8"Завершить игру"), ImVec2(200.f, 50.f)))
+            if (ImGui::Button(uTC(u8"Р—Р°РІРµСЂС€РёС‚СЊ РёРіСЂСѓ"), ImVec2(200.f, 50.f)))
             {
                 
                 OnGameGUI = false;
             }
         if (!OnGameGUI)
-        if (ImGui::Button(uTC(u8"Локальная игра"), ImVec2(200.f, 50.f)))
+        if (ImGui::Button(uTC(u8"Р›РѕРєР°Р»СЊРЅР°СЏ РёРіСЂР°"), ImVec2(200.f, 50.f)))
         {
             
             showLocalGame = true;
         }
         ImGui::Spacing();
         if (!OnGameGUI)
-        if (ImGui::Button(uTC(u8"Сетевая игра"), ImVec2(200.f, 50.f)))
+        if (ImGui::Button(uTC(u8"РЎРµС‚РµРІР°СЏ РёРіСЂР°"), ImVec2(200.f, 50.f)))
         {
             showNetworkGame = true;
         }
         if (!OnGameGUI)
-        if (ImGui::Button(uTC(u8"Профили"), ImVec2(200.f, 50.f)))
+        if (ImGui::Button(uTC(u8"РџСЂРѕС„РёР»Рё"), ImVec2(200.f, 50.f)))
         {
             showProfile = true;
         }
         //ImGui::Spacing();
         //if (!OnGameGUI)
-        //if (ImGui::Button(uTC(u8"Загрузить игру"), ImVec2(200.f, 50.f)))
+        //if (ImGui::Button(uTC(u8"Р—Р°РіСЂСѓР·РёС‚СЊ РёРіСЂСѓ"), ImVec2(200.f, 50.f)))
         //{
         //    
         //}
         ImGui::Spacing();
-        if (ImGui::Button(uTC(u8"Настройки"), ImVec2(200.f, 50.f)))
+        if (ImGui::Button(uTC(u8"РќР°СЃС‚СЂРѕР№РєРё"), ImVec2(200.f, 50.f)))
         {
             showSettings = true;
         }
         ImGui::Spacing();
-        if (ImGui::Button(uTC(u8"Справка"), ImVec2(200.f, 50.f)))
+        if (ImGui::Button(uTC(u8"РЎРїСЂР°РІРєР°"), ImVec2(200.f, 50.f)))
         {
             showRule = true;
         }
         ImGui::Spacing();
-        if (ImGui::Button(uTC(u8"Выход"), ImVec2(200.f, 50.f)))
+        if (ImGui::Button(uTC(u8"Р’С‹С…РѕРґ"), ImVec2(200.f, 50.f)))
         {
             window->close();
         }
 
-        // Закрытие главного окна imgui
+        // Р—Р°РєСЂС‹С‚РёРµ РіР»Р°РІРЅРѕРіРѕ РѕРєРЅР° imgui
         ImGui::End();
         return 0;
 	}

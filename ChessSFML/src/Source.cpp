@@ -8,7 +8,10 @@
 #include <imgui.h>
 #include <imgui-SFML.h>
 #include <imgui_console/imgui_console.h>
+#ifdef _WIN32
 #include <windows.h>
+#endif
+
 #include "RenderMenu.h"
 #include "CSettings.h"
 #include "RenderClassicChess.h"
@@ -23,7 +26,15 @@ int main()
     // получаем текущую дату и время
     std::time_t t = std::time(nullptr);
     std::tm tm;
-    localtime_s(&tm, &t);
+    #ifdef _WIN32
+        localtime_s(&tm, &t);
+    #elif __linux__
+        localtime(&t);
+    #else
+        std::cerr << "Не поддерживаемая операционная система" << std::endl;
+    #endif
+
+
     std::stringstream* ss = new stringstream;
     // форматируем дату в нужном формате
     *ss << "Alpha V(1.8.1)  ";
@@ -33,7 +44,10 @@ int main()
 
 #pragma endregion
 	#pragma region Настройка конслоси Windows
-	ShowWindow(GetConsoleWindow(), SW_HIDE);
+    #ifdef _WIN32
+    ShowWindow(GetConsoleWindow(), SW_HIDE);
+    #endif
+	
 	setlocale(LC_ALL, "Russian");
 	#pragma endregion
 	#pragma region Создание окна SFML

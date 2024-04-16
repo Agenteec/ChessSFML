@@ -2351,8 +2351,8 @@ public:
     */
     int isValidMove(std::pair<int, int> from, std::pair<int, int> to,int king = 0, std::vector<sf::Vector2i>* moves = nullptr,bool ff = false)
     {
-        __int8 piece = Board.board[from.first][from.second];
-        __int8 piece2 = Board.board[to.first][to.second];
+        short piece = Board.board[from.first][from.second];
+        short piece2 = Board.board[to.first][to.second];
         /*cout << ChessPieceStr(piece) << " (" << from.first << ", " << from.second << ")\n";
         cout << ChessPieceStr(piece2) << " (" << to.first << ", " << to.second << ")\n";*/
         if (king > 0)
@@ -2419,7 +2419,7 @@ public:
     {
         //moves = new std::vector<sf::Vector2i>;
         //Проверка на короля
-        __int8 tto = Board.board[to.first][to.second];
+        short tto = Board.board[to.first][to.second];
         if (king == 0)
         {
             if (!CheckKing(from, to))
@@ -2614,7 +2614,7 @@ public:
     int isValidMoveDiag(std::pair<int, int> from, std::pair<int, int> to,int king = 0, std::vector<sf::Vector2i>* moves = nullptr)
     {
         //Проверка на короля
-        __int8 tto = Board.board[to.first][to.second];
+        short tto = Board.board[to.first][to.second];
         if (king == 0)
         {
             if (!CheckKing(from, to))
@@ -2809,7 +2809,7 @@ public:
     }
     int isValidMoveHorse(std::pair<int, int> from, std::pair<int, int> to,int king = 0, std::vector<sf::Vector2i>* moves = nullptr)
     {
-        __int8 tto = Board.board[to.first][to.second];
+        short tto = Board.board[to.first][to.second];
         if (king == 0)
         {
             if (!CheckKing(from, to))
@@ -2897,8 +2897,8 @@ public:
     }
     int isValidMoveKing(std::pair<int, int> from, std::pair<int, int> to,int king = 0, std::vector<sf::Vector2i>* moves = nullptr)
     {
-        __int8 piece = Board.board[from.first][from.second];
-        __int8 tto = Board.board[to.first][to.second];
+        short piece = Board.board[from.first][from.second];
+        short tto = Board.board[to.first][to.second];
         bool mn = false;
         if (moves == nullptr)
         {
@@ -3379,9 +3379,9 @@ public:
             moves = new std::vector<sf::Vector2i>;
             mn = true;
         }
-        __int8 piece = Board.board[from.first][from.second];
-        __int8 piece2 = Board.board[to.first][to.second];
-        __int8 tto = Board.board[to.first][to.second];
+        short piece = Board.board[from.first][from.second];
+        short piece2 = Board.board[to.first][to.second];
+        short tto = Board.board[to.first][to.second];
         if (king == 0)
         {
             if (!CheckKing(from,to))
@@ -3538,7 +3538,7 @@ public:
         return 0;
     }
     int CheckKing(std::pair<int, int> from, std::pair<int, int> to){
-        __int8 tto = Board.board[to.first][to.second];
+        short tto = Board.board[to.first][to.second];
 
 
         if (Board.board[from.first][from.second] < 5)

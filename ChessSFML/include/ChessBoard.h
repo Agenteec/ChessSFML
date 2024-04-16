@@ -35,15 +35,15 @@ class ChessBoard
 private:
     
 public:
-    __int8** board;
+    short** board;
     int XMax;
     int YMax;
     int GameMode;
     //Конструктор классической игры(По умолчанию)
     ChessBoard(): XMax(8),YMax(8),GameMode(0) {
-        board = new __int8*[8];
+        board = new short*[8];
         for (int i = 0;i<8;i++)
-            board[i] = new __int8[8];
+            board[i] = new short[8];
         for (int i = 2; i < 6; i++)
             for (int j = 0; j < 8; j++)
             {
@@ -59,7 +59,7 @@ public:
         board[1][0] = WPawn; board[1][1] = WPawn;   board[1][2] = WPawn;    board[1][3] = WPawn;    board[1][4] = WPawn; board[1][5] = WPawn;   board[1][6] = WPawn;    board[1][7] = WPawn;
         board[0][0] = WRook; board[0][1] = WKnight; board[0][2] = WBishop;  board[0][3] = WQueen;   board[0][4] = WKing; board[0][5] = WBishop; board[0][6] = WKnight;  board[0][7] = WRook;
     }
-    ChessBoard(__int8** board,int XMax,int YMax,int GameMode = 0) : XMax(XMax), YMax(XMax),board(board),GameMode(GameMode) {}
+    ChessBoard(short** board,int XMax,int YMax,int GameMode = 0) : XMax(XMax), YMax(XMax),board(board),GameMode(GameMode) {}
     void SetGameMode(int GameMode,int XMax = 8,int YMax = 8)
     {
         if (this->GameMode != GameMode)
@@ -86,9 +86,9 @@ public:
             delete[] board[i];
         delete[] board;
 
-        __int8** board = new __int8* [XMax];
+        short** board = new short* [XMax];
         for (int i = 0; i < XMax; i++)
-            board[i] = new __int8[YMax];
+            board[i] = new short[YMax];
         if (GameMode == 0 && XMax >= 8 && YMax >= 8)
         {
             for (int i = 0; i < XMax; i++)
@@ -121,9 +121,9 @@ public:
             delete[] board[i];
         delete[] board;
 
-        __int8** board = new __int8* [XMax];
+        short** board = new short* [XMax];
         for (int i = 0; i < XMax; i++)
-            board[i] = new __int8[YMax];
+            board[i] = new short[YMax];
         if (GameMode == 0 && XMax >= 8 && YMax >= 8)
         {
             for (int i = 0; i < XMax; i++)

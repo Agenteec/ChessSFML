@@ -1,4 +1,5 @@
-#include "RenderMenu.h"
+ï»¿#include "RenderMenu.h"
+
 
 bool RenderMenu::showRenderMenu = true;
 bool RenderMenu::showProfile = false;
@@ -15,8 +16,8 @@ bool RenderMenu::is_server_waiting = false;
 bool RenderMenu::showRule = false;
 ///
 int RenderMenu::gameMode;
-float RenderMenu::moveTime = 60.0f; // Êîëè÷åñòâî ñåêóíä íà õîä
-int RenderMenu::addTimeIndex = 0; // Èíäåêñ âûáðàííîãî âðåìåíè äëÿ äîáàâëåíèÿ
+float RenderMenu::moveTime = 60.0f; // ÐšÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ ÑÐµÐºÑƒÐ½Ð´ Ð½Ð° Ñ…Ð¾Ð´
+int RenderMenu::addTimeIndex = 0; // Ð˜Ð½Ð´ÐµÐºÑ Ð²Ñ‹Ð±Ñ€Ð°Ð½Ð½Ð¾Ð³Ð¾ Ð²Ñ€ÐµÐ¼ÐµÐ½Ð¸ Ð´Ð»Ñ Ð´Ð¾Ð±Ð°Ð²Ð»ÐµÐ½Ð¸Ñ
 bool RenderMenu::isControlTime = true;
 bool RenderMenu::withRating = false;
 int RenderMenu::userId = 0;
@@ -40,7 +41,7 @@ DBController RenderMenu::db;
 ImGuiConsole RenderMenu::console;
 CSettings RenderMenu::tempSettings;
 CSettings RenderMenu::CGlobalSettings;
-string RenderMenu::VersionBuildStr;
+std::string RenderMenu::VersionBuildStr;
 
 bool RenderMenu::showReloadDialog = false;
 struct KeySet
@@ -83,12 +84,12 @@ void Starter()
     setteingstr->push_back(KeySet("WinH",&RenderMenu::CGlobalSettings.video.WinH));
     //setteingstr.push_back("brightness");
     
-    std::ifstream file("source\\settings.txt"); // îòêðûòü ôàéë äëÿ ÷òåíèÿ
+    std::ifstream file("source\\settings.txt"); // Ð¾Ñ‚ÐºÑ€Ñ‹Ñ‚ÑŒ Ñ„Ð°Ð¹Ð» Ð´Ð»Ñ Ñ‡Ñ‚ÐµÐ½Ð¸Ñ
     std::string line;
     std::string key;
     double value;
-    if (file.is_open()) { // ïðîâåðèòü, óñïåøíî ëè îòêðûò ôàéë
-        while (file >> key >> value) { // ÷èòàåì êëþ÷ è çíà÷åíèå ïîêà ìîæåì
+    if (file.is_open()) { // Ð¿Ñ€Ð¾Ð²ÐµÑ€Ð¸Ñ‚ÑŒ, ÑƒÑÐ¿ÐµÑˆÐ½Ð¾ Ð»Ð¸ Ð¾Ñ‚ÐºÑ€Ñ‹Ñ‚ Ñ„Ð°Ð¹Ð»
+        while (file >> key >> value) { // Ñ‡Ð¸Ñ‚Ð°ÐµÐ¼ ÐºÐ»ÑŽÑ‡ Ð¸ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ Ð¿Ð¾ÐºÐ° Ð¼Ð¾Ð¶ÐµÐ¼
             for (size_t i = 0; i < setteingstr->size(); i++)
             {
                 if (setteingstr[0][i].name == key)
@@ -109,20 +110,20 @@ void Starter()
             }
             std::cout << "Key: " << key << ", Value: " << value << std::endl;
         }
-        file.close(); // çàêðûòü ôàéë
+        file.close(); // Ð·Ð°ÐºÑ€Ñ‹Ñ‚ÑŒ Ñ„Ð°Ð¹Ð»
     }
     else {
-        std::ofstream file("source\\settings.txt"); // îòêðûòü ôàéë äëÿ çàïèñè
+        std::ofstream file("source\\settings.txt"); // Ð¾Ñ‚ÐºÑ€Ñ‹Ñ‚ÑŒ Ñ„Ð°Ð¹Ð» Ð´Ð»Ñ Ð·Ð°Ð¿Ð¸ÑÐ¸
 
-        if (file.is_open()) { // ïðîâåðèòü, óñïåøíî ëè îòêðûò ôàéë
-            file << "brightness " << RenderMenu::CGlobalSettings.video.brightness << std::endl; // çàïèñàòü ñòðîêó â ôàéë
-            file << "FrameRateLimit " << RenderMenu::CGlobalSettings.video.FrameRateLimit << std::endl; // çàïèñàòü ñòðîêó â ôàéë
-            file << "FullScreen " << RenderMenu::CGlobalSettings.video.FullScreen << std::endl; // çàïèñàòü ñòðîêó â ôàéë
-            file << "Vsynk " << RenderMenu::CGlobalSettings.video.Vsynk << std::endl; // çàïèñàòü ñòðîêó â ôàéë
-            file << "WinW " << RenderMenu::CGlobalSettings.video.WinW << std::endl; // çàïèñàòü ñòðîêó â ôàéë
-            file << "WinH " << RenderMenu::CGlobalSettings.video.WinH << std::endl; // çàïèñàòü ñòðîêó â ôàéë
+        if (file.is_open()) { // Ð¿Ñ€Ð¾Ð²ÐµÑ€Ð¸Ñ‚ÑŒ, ÑƒÑÐ¿ÐµÑˆÐ½Ð¾ Ð»Ð¸ Ð¾Ñ‚ÐºÑ€Ñ‹Ñ‚ Ñ„Ð°Ð¹Ð»
+            file << "brightness " << RenderMenu::CGlobalSettings.video.brightness << std::endl; // Ð·Ð°Ð¿Ð¸ÑÐ°Ñ‚ÑŒ ÑÑ‚Ñ€Ð¾ÐºÑƒ Ð² Ñ„Ð°Ð¹Ð»
+            file << "FrameRateLimit " << RenderMenu::CGlobalSettings.video.FrameRateLimit << std::endl; // Ð·Ð°Ð¿Ð¸ÑÐ°Ñ‚ÑŒ ÑÑ‚Ñ€Ð¾ÐºÑƒ Ð² Ñ„Ð°Ð¹Ð»
+            file << "FullScreen " << RenderMenu::CGlobalSettings.video.FullScreen << std::endl; // Ð·Ð°Ð¿Ð¸ÑÐ°Ñ‚ÑŒ ÑÑ‚Ñ€Ð¾ÐºÑƒ Ð² Ñ„Ð°Ð¹Ð»
+            file << "Vsynk " << RenderMenu::CGlobalSettings.video.Vsynk << std::endl; // Ð·Ð°Ð¿Ð¸ÑÐ°Ñ‚ÑŒ ÑÑ‚Ñ€Ð¾ÐºÑƒ Ð² Ñ„Ð°Ð¹Ð»
+            file << "WinW " << RenderMenu::CGlobalSettings.video.WinW << std::endl; // Ð·Ð°Ð¿Ð¸ÑÐ°Ñ‚ÑŒ ÑÑ‚Ñ€Ð¾ÐºÑƒ Ð² Ñ„Ð°Ð¹Ð»
+            file << "WinH " << RenderMenu::CGlobalSettings.video.WinH << std::endl; // Ð·Ð°Ð¿Ð¸ÑÐ°Ñ‚ÑŒ ÑÑ‚Ñ€Ð¾ÐºÑƒ Ð² Ñ„Ð°Ð¹Ð»
 
-            file.close(); // çàêðûòü ôàéë
+            file.close(); // Ð·Ð°ÐºÑ€Ñ‹Ñ‚ÑŒ Ñ„Ð°Ð¹Ð»
         }
         else {
             std::cout << "Unable to open file" << std::endl;
@@ -135,17 +136,17 @@ void Starter()
 }
 void SaveSettings()
 {
-    std::ofstream file("source\\settings.txt"); // îòêðûòü ôàéë äëÿ çàïèñè
+    std::ofstream file("source\\settings.txt"); // Ð¾Ñ‚ÐºÑ€Ñ‹Ñ‚ÑŒ Ñ„Ð°Ð¹Ð» Ð´Ð»Ñ Ð·Ð°Ð¿Ð¸ÑÐ¸
 
-    if (file.is_open()) { // ïðîâåðèòü, óñïåøíî ëè îòêðûò ôàéë
-        file << "brightness " << RenderMenu::CGlobalSettings.video.brightness << std::endl; // çàïèñàòü ñòðîêó â ôàéë
-        file << "FrameRateLimit " << RenderMenu::CGlobalSettings.video.FrameRateLimit << std::endl; // çàïèñàòü ñòðîêó â ôàéë
-        file << "FullScreen " << RenderMenu::CGlobalSettings.video.FullScreen << std::endl; // çàïèñàòü ñòðîêó â ôàéë
-        file << "Vsynk " << RenderMenu::CGlobalSettings.video.Vsynk << std::endl; // çàïèñàòü ñòðîêó â ôàéë
-        file << "WinW " << RenderMenu::CGlobalSettings.video.WinW << std::endl; // çàïèñàòü ñòðîêó â ôàéë
-        file << "WinH " << RenderMenu::CGlobalSettings.video.WinH << std::endl; // çàïèñàòü ñòðîêó â ôàéë
+    if (file.is_open()) { // Ð¿Ñ€Ð¾Ð²ÐµÑ€Ð¸Ñ‚ÑŒ, ÑƒÑÐ¿ÐµÑˆÐ½Ð¾ Ð»Ð¸ Ð¾Ñ‚ÐºÑ€Ñ‹Ñ‚ Ñ„Ð°Ð¹Ð»
+        file << "brightness " << RenderMenu::CGlobalSettings.video.brightness << std::endl; // Ð·Ð°Ð¿Ð¸ÑÐ°Ñ‚ÑŒ ÑÑ‚Ñ€Ð¾ÐºÑƒ Ð² Ñ„Ð°Ð¹Ð»
+        file << "FrameRateLimit " << RenderMenu::CGlobalSettings.video.FrameRateLimit << std::endl; // Ð·Ð°Ð¿Ð¸ÑÐ°Ñ‚ÑŒ ÑÑ‚Ñ€Ð¾ÐºÑƒ Ð² Ñ„Ð°Ð¹Ð»
+        file << "FullScreen " << RenderMenu::CGlobalSettings.video.FullScreen << std::endl; // Ð·Ð°Ð¿Ð¸ÑÐ°Ñ‚ÑŒ ÑÑ‚Ñ€Ð¾ÐºÑƒ Ð² Ñ„Ð°Ð¹Ð»
+        file << "Vsynk " << RenderMenu::CGlobalSettings.video.Vsynk << std::endl; // Ð·Ð°Ð¿Ð¸ÑÐ°Ñ‚ÑŒ ÑÑ‚Ñ€Ð¾ÐºÑƒ Ð² Ñ„Ð°Ð¹Ð»
+        file << "WinW " << RenderMenu::CGlobalSettings.video.WinW << std::endl; // Ð·Ð°Ð¿Ð¸ÑÐ°Ñ‚ÑŒ ÑÑ‚Ñ€Ð¾ÐºÑƒ Ð² Ñ„Ð°Ð¹Ð»
+        file << "WinH " << RenderMenu::CGlobalSettings.video.WinH << std::endl; // Ð·Ð°Ð¿Ð¸ÑÐ°Ñ‚ÑŒ ÑÑ‚Ñ€Ð¾ÐºÑƒ Ð² Ñ„Ð°Ð¹Ð»
 
-        file.close(); // çàêðûòü ôàéë
+        file.close(); // Ð·Ð°ÐºÑ€Ñ‹Ñ‚ÑŒ Ñ„Ð°Ð¹Ð»
     }
     else {
         std::cout << "Unable to open file" << std::endl;
@@ -159,30 +160,30 @@ void scaleImage(sf::Sprite& sprite, int desiredWidth, int desiredHeight)
 
     sprite.setScale(scaleX, scaleY);
 }
-//Òîëüêî äëÿ Windows
+//Ð¢Ð¾Ð»ÑŒÐºÐ¾ Ð´Ð»Ñ Windows
 void RenderMenu::restart_program()
 {
     SaveSettings();
-    // Âûçûâàåì êîìàíäíóþ ñòðîêó è ïåðåäàåì åé êîìàíäó äëÿ çàïóñêà ïðîãðàììû çàíîâî
+    // Ð’Ñ‹Ð·Ñ‹Ð²Ð°ÐµÐ¼ ÐºÐ¾Ð¼Ð°Ð½Ð´Ð½ÑƒÑŽ ÑÑ‚Ñ€Ð¾ÐºÑƒ Ð¸ Ð¿ÐµÑ€ÐµÐ´Ð°ÐµÐ¼ ÐµÐ¹ ÐºÐ¾Ð¼Ð°Ð½Ð´Ñƒ Ð´Ð»Ñ Ð·Ð°Ð¿ÑƒÑÐºÐ° Ð¿Ñ€Ð¾Ð³Ñ€Ð°Ð¼Ð¼Ñ‹ Ð·Ð°Ð½Ð¾Ð²Ð¾
 
     std::system("start ChessCounterattack.exe");
     
 
-    // Çàâåðøàåì òåêóùèé ïðîöåññ
+    // Ð—Ð°Ð²ÐµÑ€ÑˆÐ°ÐµÐ¼ Ñ‚ÐµÐºÑƒÑ‰Ð¸Ð¹ Ð¿Ñ€Ð¾Ñ†ÐµÑÑ
     std::exit(0);
 }
 void RenderMenu::ReloaderDialog()
 {
-    ImGui::OpenPopup(uTC(u8"Ïåðåçàãðóçèòü ïðèëîæåíèå?"));
+    ImGui::OpenPopup(uTC(u8"ÐŸÐµÑ€ÐµÐ·Ð°Ð³Ñ€ÑƒÐ·Ð¸Ñ‚ÑŒ Ð¿Ñ€Ð¸Ð»Ð¾Ð¶ÐµÐ½Ð¸Ðµ?"));
     
     // Confirmation
-    if (ImGui::BeginPopupModal(uTC(u8"Ïåðåçàãðóçèòü ïðèëîæåíèå?"), &showReloadDialog, ImGuiWindowFlags_AlwaysAutoResize))
+    if (ImGui::BeginPopupModal(uTC(u8"ÐŸÐµÑ€ÐµÐ·Ð°Ð³Ñ€ÑƒÐ·Ð¸Ñ‚ÑŒ Ð¿Ñ€Ð¸Ð»Ð¾Ð¶ÐµÐ½Ð¸Ðµ?"), &showReloadDialog, ImGuiWindowFlags_AlwaysAutoResize))
     {
         //std::cout << "Worked\n";
-        ImGui::Text(uTC(u8"Äëÿ èçìåíåíèÿ íåêîòîðûõ ïàðàìåòðîâ íóæíà ïåðåçàãðóçêà,\n ïåðåçàãðóçèòü?\n\n"));
+        ImGui::Text(uTC(u8"Ð”Ð»Ñ Ð¸Ð·Ð¼ÐµÐ½ÐµÐ½Ð¸Ñ Ð½ÐµÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ñ… Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ð¾Ð² Ð½ÑƒÐ¶Ð½Ð° Ð¿ÐµÑ€ÐµÐ·Ð°Ð³Ñ€ÑƒÐ·ÐºÐ°,\n Ð¿ÐµÑ€ÐµÐ·Ð°Ð³Ñ€ÑƒÐ·Ð¸Ñ‚ÑŒ?\n\n"));
         ImGui::Separator();
 
-        if (ImGui::Button(uTC(u8"Ïåðåçàãðóçèòü"), ImVec2(120, 0)))
+        if (ImGui::Button(uTC(u8"ÐŸÐµÑ€ÐµÐ·Ð°Ð³Ñ€ÑƒÐ·Ð¸Ñ‚ÑŒ"), ImVec2(120, 0)))
         {
             showReloadDialog = false;
             restart_program();
@@ -191,7 +192,7 @@ void RenderMenu::ReloaderDialog()
 
         ImGui::SetItemDefaultFocus();
         ImGui::SameLine();
-        if (ImGui::Button(uTC(u8"Íåò"), ImVec2(120, 0)))
+        if (ImGui::Button(uTC(u8"ÐÐµÑ‚"), ImVec2(120, 0)))
         {
             showReloadDialog = false;
             ImGui::CloseCurrentPopup();
@@ -201,14 +202,14 @@ void RenderMenu::ReloaderDialog()
     /*
     ImGui::OpenPopup("Reload Dialog");
     if (ImGui::BeginPopupModal("Reload Dialog", &showReloadDialog, ImGuiWindowFlags_AlwaysAutoResize)) {
-        ImGui::Text("Äëÿ èçìåíåíèÿ íåêîòîðûõ ïàðàìåòðîâ íóæíà ïåðåçàãðóçêà, ïåðåçàãðóçèòü?");
+        ImGui::Text("Ð”Ð»Ñ Ð¸Ð·Ð¼ÐµÐ½ÐµÐ½Ð¸Ñ Ð½ÐµÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ñ… Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ð¾Ð² Ð½ÑƒÐ¶Ð½Ð° Ð¿ÐµÑ€ÐµÐ·Ð°Ð³Ñ€ÑƒÐ·ÐºÐ°, Ð¿ÐµÑ€ÐµÐ·Ð°Ð³Ñ€ÑƒÐ·Ð¸Ñ‚ÑŒ?");
         ImGui::Separator();
-        if (ImGui::Button("Äà", ImVec2(120, 0))) {
+        if (ImGui::Button("Ð”Ð°", ImVec2(120, 0))) {
             restart_program();
             ImGui::CloseCurrentPopup();
         }
         ImGui::SameLine();
-        if (ImGui::Button("Íåò", ImVec2(120, 0))) {
+        if (ImGui::Button("ÐÐµÑ‚", ImVec2(120, 0))) {
             
             ImGui::CloseCurrentPopup();
         }
@@ -217,7 +218,13 @@ void RenderMenu::ReloaderDialog()
 }
 void StartServer()
 {
+#ifdef _WIN32
     std::system("start ChessServer.exe");
+#elif __linux__
+    std::system("./ChessServer");
+#else
+    std::cerr << "ÐÐµ Ð¿Ð¾Ð´Ð´ÐµÑ€Ð¶Ð¸Ð²Ð°ÐµÐ¼Ð°Ñ Ð¾Ð¿ÐµÑ€Ð°Ñ†Ð¸Ð¾Ð½Ð½Ð°Ñ ÑÐ¸ÑÑ‚ÐµÐ¼Ð°" << std::endl;
+#endif
 }
 
 
