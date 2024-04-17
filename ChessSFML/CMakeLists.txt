@@ -9,7 +9,7 @@ target_link_libraries(ChessSFML PRIVATE sfml-system sfml-network sfml-graphics s
 
 target_link_libraries(ChessServer PRIVATE sfml-system sfml-network)
 
-find_package(SFML COMPONENTS system window graphics network CONFIG REQUIRED)
+find_package(SFML COMPONENTS system window graphics network audio CONFIG REQUIRED)
 find_package(imgui CONFIG REQUIRED)
 find_package(ImGui-SFML CONFIG REQUIRED)
 find_package(unofficial-sqlite3 CONFIG REQUIRED)

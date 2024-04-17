@@ -84,7 +84,7 @@ void Starter()
     setteingstr->push_back(KeySet("WinH",&RenderMenu::CGlobalSettings.video.WinH));
     //setteingstr.push_back("brightness");
     
-    std::ifstream file("source\\settings.txt"); // открыть файл для чтения
+    std::ifstream file("source/settings.txt"); // открыть файл для чтения
     std::string line;
     std::string key;
     double value;
@@ -113,7 +113,7 @@ void Starter()
         file.close(); // закрыть файл
     }
     else {
-        std::ofstream file("source\\settings.txt"); // открыть файл для записи
+        std::ofstream file("source/settings.txt"); // открыть файл для записи
 
         if (file.is_open()) { // проверить, успешно ли открыт файл
             file << "brightness " << RenderMenu::CGlobalSettings.video.brightness << std::endl; // записать строку в файл
@@ -136,7 +136,7 @@ void Starter()
 }
 void SaveSettings()
 {
-    std::ofstream file("source\\settings.txt"); // открыть файл для записи
+    std::ofstream file("source/settings.txt"); // открыть файл для записи
 
     if (file.is_open()) { // проверить, успешно ли открыт файл
         file << "brightness " << RenderMenu::CGlobalSettings.video.brightness << std::endl; // записать строку в файл
@@ -165,8 +165,14 @@ void RenderMenu::restart_program()
 {
     SaveSettings();
     // Вызываем командную строку и передаем ей команду для запуска программы заново
-
+#ifdef _WIN32
     std::system("start ChessCounterattack.exe");
+#elif __linux__
+    std::system("./ChessCounterattack.exe");
+#else
+    std::cerr << "Не поддерживаемая операционная система" << std::endl;
+#endif
+    
     
 
     // Завершаем текущий процесс

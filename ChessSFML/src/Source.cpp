@@ -29,7 +29,7 @@ int main()
     #ifdef _WIN32
         localtime_s(&tm, &t);
     #elif __linux__
-        localtime(&t);
+       tm = *localtime(&t);
     #else
         std::cerr << "Не поддерживаемая операционная система" << std::endl;
     #endif
@@ -63,12 +63,15 @@ int main()
         RenderMenu::CGlobalSettings.video.WinH = sf::VideoMode::getDesktopMode().height;
     }
     sf::Image icon;
-    if (!icon.loadFromFile("source\\images\\icon.png"))
+    if (!icon.loadFromFile("source/images/icon.png"))
     {
         // Ошибка загрузки файла
     }
     // Изменение иконки окна
+#ifdef _WIN32
     window->setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+#endif
+    
     window->setFramerateLimit(RenderMenu::CGlobalSettings.video.FrameRateLimit);
 
     // Инициализация imgui
@@ -78,7 +81,7 @@ int main()
    // Load font
     ImGuiIO& io = ImGui::GetIO();
     io.Fonts->Clear();
-    io.Fonts->AddFontFromFileTTF("source\\Fonts\\impact.ttf", 20.f, nullptr, io.Fonts->GetGlyphRangesCyrillic());
+    io.Fonts->AddFontFromFileTTF("source/Fonts/impact.ttf", 20.f, nullptr, io.Fonts->GetGlyphRangesCyrillic());
 
     // Update font texture
     ImGui::SFML::UpdateFontTexture();
@@ -89,7 +92,7 @@ int main()
 
     // Загрузка текстур для фона
     sf::Texture texture;
-    texture.loadFromFile("source\\images\\background.png");
+    texture.loadFromFile("source/images/background.png");
     sf::Sprite background(texture);
     scaleImage(background, texture.getSize().x, texture.getSize().y);
     ImGui::StyleColorsDark(); // устанавливаем стиль
@@ -118,7 +121,7 @@ int main()
 
     #pragma region SFMLFont
     sf::Font font;
-    if (!font.loadFromFile("source\\Fonts\\arial.ttf"))
+    if (!font.loadFromFile("source/Fonts/arial.ttf"))
     {
         std::cout << "Unable to load font!\n";
         return EXIT_FAILURE;

@@ -221,15 +221,15 @@ public:
     RenderClassicChess() :Board(ChessBoard()), Rotation(1), offset(sf::Vector2f(25 * RenderMenu::CGlobalSettings.chess.scale, 25 * RenderMenu::CGlobalSettings.chess.scale)), isMove(0), n(-1), dx(0), dy(0), WorB(1) ,lastmove(LastMove(sf::Vector2i(), sf::Vector2i(),12)),WCheck(false),WMate(false),BMate(false),BCheck(false),moves(nullptr),WBDraw(false),OnNetworkGame(0),conection(0),netMove("-"),myMove("-"), WinWindow(0), WinWindowC(0),nc(nullptr),Back(false),IsHistory(false),NetBack(false),MyNetBack(false),MyPacket(""),TransPawn(0), superiority(0){
 
         
-        MoveSoundBuffer.loadFromFile("source\\Sounds\\Move.wav");
-        CaptureSoundBuffer.loadFromFile("source\\Sounds\\Сapture.wav");
+        MoveSoundBuffer.loadFromFile("source/Sounds/Move.wav");
+        CaptureSoundBuffer.loadFromFile("source/Sounds/Сapture.wav");
         MoveSound.setBuffer(MoveSoundBuffer);
         CaptureeSound.setBuffer(CaptureSoundBuffer);
 
         Rotation = 4;
         
 
-        if (!font.loadFromFile("source\\Fonts\\arial.ttf"))
+        if (!font.loadFromFile("source/Fonts/arial.ttf"))
         {
             std::cout << "Unable to load font!\n";
         }
@@ -244,29 +244,29 @@ public:
 
         ChessText.scale(RenderMenu::CGlobalSettings.chess.scale, RenderMenu::CGlobalSettings.chess.scale);
 
-        ChessPicesTexture[WPawn].loadFromFile("source\\images\\ChessPiece\\500png\\" + ChessPieceStr(WPawn) + ".png");
+        ChessPicesTexture[WPawn].loadFromFile("source/images/ChessPiece/500png/" + ChessPieceStr(WPawn) + ".png");
 
-        ChessPicesTexture[WKnight].loadFromFile("source\\images\\ChessPiece\\500png\\" + ChessPieceStr(WKnight) + ".png");
+        ChessPicesTexture[WKnight].loadFromFile("source/images/ChessPiece/500png/" + ChessPieceStr(WKnight) + ".png");
 
-        ChessPicesTexture[WBishop].loadFromFile("source\\images\\ChessPiece\\500png\\" + ChessPieceStr(WBishop) + ".png");
+        ChessPicesTexture[WBishop].loadFromFile("source/images/ChessPiece/500png/" + ChessPieceStr(WBishop) + ".png");
 
-        ChessPicesTexture[WRook].loadFromFile("source\\images\\ChessPiece\\500png\\" + ChessPieceStr(WRook) + ".png");
+        ChessPicesTexture[WRook].loadFromFile("source/images/ChessPiece/500png/" + ChessPieceStr(WRook) + ".png");
 
-        ChessPicesTexture[WQueen].loadFromFile("source\\images\\ChessPiece\\500png\\" + ChessPieceStr(WQueen) + ".png");
+        ChessPicesTexture[WQueen].loadFromFile("source/images/ChessPiece/500png/" + ChessPieceStr(WQueen) + ".png");
 
-        ChessPicesTexture[WKing].loadFromFile("source\\images\\ChessPiece\\500png\\" + ChessPieceStr(WKing) + ".png");
+        ChessPicesTexture[WKing].loadFromFile("source/images/ChessPiece/500png/" + ChessPieceStr(WKing) + ".png");
 
-        ChessPicesTexture[BPawn].loadFromFile("source\\images\\ChessPiece\\500png\\" + ChessPieceStr(BPawn) + ".png");
+        ChessPicesTexture[BPawn].loadFromFile("source/images/ChessPiece/500png/" + ChessPieceStr(BPawn) + ".png");
 
-        ChessPicesTexture[BKnight].loadFromFile("source\\images\\ChessPiece\\500png\\" + ChessPieceStr(BKnight) + ".png");
+        ChessPicesTexture[BKnight].loadFromFile("source/images/ChessPiece/500png/" + ChessPieceStr(BKnight) + ".png");
 
-        ChessPicesTexture[BBishop].loadFromFile("source\\images\\ChessPiece\\500png\\" + ChessPieceStr(BBishop) + ".png");
+        ChessPicesTexture[BBishop].loadFromFile("source/images/ChessPiece/500png/" + ChessPieceStr(BBishop) + ".png");
 
-        ChessPicesTexture[BRook].loadFromFile("source\\images\\ChessPiece\\500png\\" + ChessPieceStr(BRook) + ".png");
+        ChessPicesTexture[BRook].loadFromFile("source/images/ChessPiece/500png/" + ChessPieceStr(BRook) + ".png");
 
-        ChessPicesTexture[BQueen].loadFromFile("source\\images\\ChessPiece\\500png\\" + ChessPieceStr(BQueen) + ".png");
+        ChessPicesTexture[BQueen].loadFromFile("source/images/ChessPiece/500png/" + ChessPieceStr(BQueen) + ".png");
 
-        ChessPicesTexture[BKing].loadFromFile("source\\images\\ChessPiece\\500png\\" + ChessPieceStr(BKing) + ".png");
+        ChessPicesTexture[BKing].loadFromFile("source/images/ChessPiece/500png/" + ChessPieceStr(BKing) + ".png");
         SpritePieces = new std::vector<SpritePiece>;
         for (int i = 0; i < Board.XMax; ++i)
         {

@@ -3,6 +3,7 @@
     "sfml",
     "imgui",
     "imgui-sfml",
-    "sqlite3"
+    "sqlite3",
+    "nlohmann-json"
   ]
 }

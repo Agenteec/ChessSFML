@@ -78,7 +78,16 @@ public:
     
     static void OpenURL(const std::string& url) {
         // Формируем команду для открытия ссылки в браузере
-        std::string command = "start " + url; // В Linux средах используется xdg-open, в Windows можно использовать start
+         // В Linux средах используется xdg-open, в Windows можно использовать start
+
+        
+#ifdef _WIN32
+        std::string command = "start " + url;
+#elif __linux__
+        std::string command = "xdg-open " + url;
+#else
+        std::cerr << "Не поддерживаемая операционная система" << std::endl;
+#endif
         // Выполняем команду в командной строке
         system(command.c_str());
     }
