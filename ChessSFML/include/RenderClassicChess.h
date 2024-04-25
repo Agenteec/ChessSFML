@@ -1959,6 +1959,10 @@ public:
     {
         if (PacketMove != netMove)
         {
+            if (PacketMove == "Hi server, i'm guest client!")
+            {
+                RenderMenu::is_server_waiting = false;
+            }
             if (PacketMove[0] != '-')
             {
                 if (netMove != PacketMove)

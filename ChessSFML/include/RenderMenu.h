@@ -388,7 +388,7 @@ public:
                 ImGui::SliderFloat(uTC(u8"Время на партию"), &moveTime, 30.0f, 3600.0f, "%.0f sec");
                 ImGui::Combo(uTC(u8"Добавление секунд на ход"), &addTimeIndex, addTimes, 6);
             }
-            ImGui::Checkbox(uTC(u8"Рейтинговая партия"), &withRating);
+            //ImGui::Checkbox(uTC(u8"Рейтинговая партия"), &withRating);
             // Кнопки "Запуск" и "Отмена"
         }
         
@@ -533,8 +533,8 @@ public:
 
     static void SerwerWait()
     {
-            ImGui::Begin(uTC(u8"Waiting for opponent"), &is_server_waiting, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
-            ImGui::Text(uTC(u8"Пожалуйста, подождите пока к вам не подключится опонент..."));
+            ImGui::Begin(uTC(u8"Ожидание соперника"), &is_server_waiting, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
+            ImGui::Text(uTC(u8"Пожалуйста, подождите пока к вам не подключится оппонент..."));
             if (ImGui::Button(uTC(u8"Отмена")))
             {
                 //is_cancelled = true;

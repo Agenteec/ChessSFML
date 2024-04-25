@@ -237,7 +237,7 @@ public:
        
 
         //ImGui::SFML::Update(*window, ClockT.restart());
-        ImGui::Begin("Chess Clock");
+        ImGui::Begin(uTC(u8"Таймер"));
         float bhour = bTime / 3600.;
         float bmin = (bTime - (int)bhour * 3600.) / 60.;
         float bsec = bTime - (int)bhour * 3600. - (int)bmin * 60.;
@@ -246,11 +246,11 @@ public:
         float wsec = wTime - (int)whour * 3600. - (int)wmin * 60;
 
         std::stringstream ss;
-        ss << (int)wsec << ":" << (int)wmin << ":" << (int)whour;
+        ss << (int)whour << ":" << (int)wmin << ":" << (int)wsec;
         std::string whiteTimeString = ss.str();
 
         ss.str("");
-        ss << (int)bsec << ":" << (int)bmin  << ":" << (int)bhour;
+        ss << (int)bhour << ":" << (int)bmin  << ":" << (int)bsec;
         std::string blackTimeString = ss.str();
         if (!isPaused) {
             if (whoTurns) {
@@ -269,7 +269,7 @@ public:
             }
         }
 
-        if (ImGui::Button(isPaused ? "Start" : "Pause")) {
+        if (ImGui::Button(isPaused ? uTC(u8"Старт") : uTC(u8"Пауза"))) {
             isPaused = !isPaused;
         }
 
@@ -280,10 +280,10 @@ public:
         //    isBlackTurn = false;
         //}
 
-        ImGui::Text(whoTurns ? "Black's turn" : "White's turn");
+        ImGui::Text(whoTurns ? uTC(u8"Ход чёрных") : uTC(u8"Ход белых"));
 
-        ImGui::Text("White: %s", whiteTimeString.c_str());
-        ImGui::Text("Black: %s", blackTimeString.c_str());
+        ImGui::Text("%s: %s", uTC(u8"Белые"), whiteTimeString.c_str());
+        ImGui::Text("%s: %s", uTC(u8"Чёрные"),blackTimeString.c_str());
 
         ImGui::End();
     }
