@@ -143,14 +143,13 @@ public:
 
         }
 
-        // Выбор режима игры
+
 
         if (ImGui::Button(uTC(u8"Отмена")))
         {
             showRule = 0;
         }
 
-        // Завершение окна ImGui
 
         ImGui::End();
 
@@ -389,7 +388,6 @@ public:
                 ImGui::Combo(uTC(u8"Добавление секунд на ход"), &addTimeIndex, addTimes, 6);
             }
             //ImGui::Checkbox(uTC(u8"Рейтинговая партия"), &withRating);
-            // Кнопки "Запуск" и "Отмена"
         }
         
 
@@ -544,10 +542,7 @@ public:
     }
 
     static void ImGuiFunctionDebug() {
-        // Создаем статические переменные для отслеживания времени и FPS
-
-
-        // Обновляем время прошедшее с последнего обновления кадра
+       
         const float current_time = ImGui::GetTime();
         deltaTime = current_time - lastFrameTime;
         lastFrameTime = current_time;

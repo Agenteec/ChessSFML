@@ -1,6 +1,9 @@
 ﻿#pragma once
 #include "ChessBoard.h"
 #include "RenderMenu.h"
+#include <locale>
+#include <codecvt>
+#include <string>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include "NClient.h"
@@ -158,6 +161,10 @@ public:
     /// Контроль времени
     /// </summary>
     float wTime, bTime;
+    /// <summary>
+    /// Ник игрока
+    /// </summary>
+    sf::Text playerNameText;
 
     sf::Vector2i CordRotater(int x,int y)
     {
@@ -236,6 +243,10 @@ public:
         Superiority.setFont(font);
         Superiority.setFillColor(sf::Color(0,0,0));
         Superiority.setCharacterSize(30 * RenderMenu::CGlobalSettings.chess.scale * 0.7);
+
+        playerNameText.setFont(font);
+        playerNameText.setFillColor(sf::Color(180, 180,256));
+        playerNameText.setCharacterSize(30 * RenderMenu::CGlobalSettings.chess.scale * 0.7);
 
         ChessText.setFont(font);
         ChessText.setCharacterSize(14 * RenderMenu::CGlobalSettings.chess.scale * 0.7);
@@ -2129,7 +2140,25 @@ public:
         }
         Superiority.setPosition(Board.XMax * RenderMenu::CGlobalSettings.chess.cellSize * RenderMenu::CGlobalSettings.chess.scale +RenderMenu::CGlobalSettings.chess.scale + RenderMenu::CGlobalSettings.video.WinW / 2 - Board.XMax / 2 * RenderMenu::CGlobalSettings.chess.cellSize * RenderMenu::CGlobalSettings.chess.scale+20, RenderMenu::CGlobalSettings.chess.scale + RenderMenu::CGlobalSettings.video.WinH / 10);
         Superiority.setString(std::to_string(superiority));
+        playerNameText.setPosition(Board.XMax * RenderMenu::CGlobalSettings.chess.cellSize * RenderMenu::CGlobalSettings.chess.scale + RenderMenu::CGlobalSettings.chess.scale + RenderMenu::CGlobalSettings.video.WinW / 2 - Board.XMax / 2 * RenderMenu::CGlobalSettings.chess.cellSize * RenderMenu::CGlobalSettings.chess.scale + 20, Board.XMax * RenderMenu::CGlobalSettings.chess.cellSize * RenderMenu::CGlobalSettings.chess.scale + RenderMenu::CGlobalSettings.chess.scale + RenderMenu::CGlobalSettings.video.WinH / 2 - Board.XMax / 2 * RenderMenu::CGlobalSettings.chess.cellSize * RenderMenu::CGlobalSettings.chess.scale + 20);
+        playerNameText.setString(L"Аноним");
+        if (RenderMenu::db.users.empty())
+        {
+            
+        }
+        else
+        {
+            for (const auto& user : RenderMenu::db.users) {
+                if (RenderMenu::userId == user.id)
+                {
+                    std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+                    playerNameText.setString(converter.from_bytes(user.name));
+                }
+
+            }
+        }
         window->draw(Superiority);
+        window->draw(playerNameText);
         //Рамка
         sf::RectangleShape Bsquare(sf::Vector2f(RenderMenu::CGlobalSettings.chess.cellSize * RenderMenu::CGlobalSettings.chess.scale * Board.XMax+16, RenderMenu::CGlobalSettings.chess.cellSize * RenderMenu::CGlobalSettings.chess.scale * Board.YMax+16));
         Bsquare.setPosition(0 * RenderMenu::CGlobalSettings.chess.cellSize * RenderMenu::CGlobalSettings.chess.scale + RenderMenu::CGlobalSettings.video.WinW / 2 - Board.XMax / 2 * RenderMenu::CGlobalSettings.chess.cellSize * RenderMenu::CGlobalSettings.chess.scale-8, 0 * RenderMenu::CGlobalSettings.chess.cellSize * RenderMenu::CGlobalSettings.chess.scale + RenderMenu::CGlobalSettings.video.WinH / 10-8);
